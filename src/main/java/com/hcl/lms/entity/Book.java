@@ -12,12 +12,11 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-@Table
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table
 public class Book implements Serializable{
 
 private static final long serialVersionUID = 1L;
@@ -32,4 +31,8 @@ private static final long serialVersionUID = 1L;
 	private LocalDate lendDate;
 	private Integer userId;
 
-	}
+
+}
+
+	
+

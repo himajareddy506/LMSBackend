@@ -11,6 +11,4 @@ public class ExceptionConstants {
 	public static final String EMAIL_INVALID = "Invalid emailId";
 	public static final String MOBILE_INVALID = "Invalid Mobile Number";
 	public static final String releaseStatus="released";
-
-
 }
