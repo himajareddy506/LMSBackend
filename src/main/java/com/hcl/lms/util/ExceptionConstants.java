@@ -12,4 +12,5 @@ public class ExceptionConstants {
 	public static final String MOBILE_INVALID = "Invalid Mobile Number";
 	public static final String releaseStatus="released";
 
+
 }

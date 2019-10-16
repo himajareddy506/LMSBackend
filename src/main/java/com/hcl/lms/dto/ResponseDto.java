@@ -3,9 +3,12 @@ package com.hcl.lms.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+
 @Setter
+@Getter
 public class ResponseDto {
-		private Integer statusCode;
-		private String message;
+	
+	private String message;
+	private Integer statusCode;
+	private Integer bookCode;
 }
