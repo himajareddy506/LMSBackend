@@ -15,22 +15,28 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
+import com.hcl.lms.dto.AddSummaryInfo;
+import com.hcl.lms.dto.AddSummaryResponse;
 import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.service.BookServiceImpl;
+import com.hcl.lms.service.UserBookSummary;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookControllerTest {
 
 	@Mock
 	BookServiceImpl bookServiceImpl;
+	@Mock
+	UserBookSummary userBookSummary;
 	@InjectMocks
 	BookController bookController;
 	Book book;
 	BookRequestDto bookRequestInfo=new BookRequestDto();
-	
+	AddSummaryInfo addSummaryInfo=new AddSummaryInfo();
+	List<AddSummaryInfo> addSummaryDetail=new ArrayList<>();
 	@Before
 	public void initiateData() {
 		
@@ -42,6 +48,12 @@ public class BookControllerTest {
 		book.setUserId(1);
 		bookRequestInfo.setBookId(1);
 		bookRequestInfo.setUserId(1);
+		addSummaryInfo.setAuthor(book.getAuthor());
+		addSummaryInfo.setBookName(book.getBookName());
+		addSummaryInfo.setLendDate(book.getLendDate());
+		addSummaryDetail.add(addSummaryInfo);
+		
+		
 	}
 	
 	
@@ -61,6 +73,15 @@ public class BookControllerTest {
 		Mockito.when(bookServiceImpl.requestBook(Mockito.any())).thenReturn(book);
 		ResponseEntity<BookResponseDto> response=bookController.requestBook(bookRequestInfo);
 		assertEquals(200,response.getStatusCode().value());
+	}
+	@Test
+	public void testAddSummary() {
+		Mockito.when(userBookSummary.addSummaryInfo(Mockito.anyInt())).thenReturn(addSummaryDetail);
+		ResponseEntity<AddSummaryResponse> response=bookController.addSummary(1);
+		assertNotNull(response);
+		assertEquals(200, response.getStatusCode().value());
+		
+		
 	}
 }
 
