@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.hcl.lms.entity.BorrowDetail;
 
+@Repository
 public interface BorrowDetailRepository extends JpaRepository<BorrowDetail, Integer> {
 	List<BorrowDetail> findByReleaseDate(LocalDate date);
 }
