@@ -2,7 +2,11 @@ package com.hcl.lms.service;
 
 import java.time.LocalDate;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Random;
+=======
+import java.util.Optional;
+>>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +61,17 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public String requestBook(BookRequestDto bookRequestDto) {
 		BookRequestDetail bookRequestrequestDetail = new BookRequestDetail();
+=======
+	public Book requestBook(BookRequestDto bookRequestDto) {
+		BookRequestDetail bookRequestrequestDetail=new BookRequestDetail();
+>>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
 		BeanUtils.copyProperties(bookRequestDto, bookRequestrequestDetail);
 		bookRequestDetail.save(bookRequestrequestDetail);
-		return "Your request has been Submitted";
+		Optional<Book> book=bookRepository.findById(bookRequestDto.getBookId());
+		return book.get();
 	}
 
 	@Override
