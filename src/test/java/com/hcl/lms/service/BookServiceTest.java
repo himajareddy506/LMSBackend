@@ -35,7 +35,7 @@ public class BookServiceTest {
 	}
 	
 	@Test
-	public void testGetAllCategory() {
+	public void testGetBookList() {
 		List<Book> bookList=new ArrayList<>();
 		bookList.add(book);
 		Mockito.when(bookRepository.findAll()).thenReturn(bookList);

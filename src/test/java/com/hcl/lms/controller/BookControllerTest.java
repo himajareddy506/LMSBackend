@@ -41,7 +41,7 @@ public class BookControllerTest {
 	
 	
 	@Test
-	public void testGetCategoryList() {
+	public void testGetBookList() {
 		List<Book> bookList=new ArrayList<>();
 		bookList.add(book);
 		Mockito.when(bookServiceImpl.getBookList()).thenReturn(bookList);
