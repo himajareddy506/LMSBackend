@@ -30,7 +30,7 @@ public class LibraryServiceImpl implements LibraryService {
 		book.setLendDate(LocalDate.now());
 		book.setBookCode(random.nextInt(1000));
 		libraryRepository.save(book);
-		responseDto.setMessage("added");
+		responseDto.setMessage("Book Added Successfully");
 		responseDto.setStatusCode(200);
 		
 		return responseDto;

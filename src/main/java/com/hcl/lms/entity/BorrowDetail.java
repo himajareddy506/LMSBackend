@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class BorrowDetail {
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer borrowerId;
