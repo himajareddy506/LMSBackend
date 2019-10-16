@@ -1,6 +1,7 @@
 package com.hcl.lms.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +33,12 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public String requestBook(BookRequestDto bookRequestDto) {
+	public Book requestBook(BookRequestDto bookRequestDto) {
 		BookRequestDetail bookRequestrequestDetail=new BookRequestDetail();
 		BeanUtils.copyProperties(bookRequestDto, bookRequestrequestDetail);
 		bookRequestDetail.save(bookRequestrequestDetail);
-		return "Your request has been Submitted";
+		Optional<Book> book=bookRepository.findById(bookRequestDto.getBookId());
+		return book.get();
 	}
 
 }

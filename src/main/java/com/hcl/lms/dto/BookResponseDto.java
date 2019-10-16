@@ -3,10 +3,11 @@ package com.hcl.lms.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class ResponseDto {
-	
+@Setter
+public class BookResponseDto {
+	private String bookName;
+	private String authorName;
 	private String message;
 	private Integer statusCode;
 }

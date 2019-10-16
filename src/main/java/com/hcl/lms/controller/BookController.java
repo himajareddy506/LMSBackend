@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
+import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.exception.CommonException;
@@ -48,15 +49,17 @@ public class BookController {
 	
 	/**
 	 * @param bookId,userId
-	 * @return Success message on successful request
+	 * @return authorName,bookName,message,statusCode
 	 *
 	 */
 	@PostMapping("/book/request")
-	public ResponseEntity<ResponseDto> requestBook(@RequestBody BookRequestDto bookRequestDto){
-		ResponseDto response=new ResponseDto();
-		String message=bookService.requestBook(bookRequestDto);
-		response.setMessage(message);
-		response.setStatusCode(200);
-		return new ResponseEntity<>(response,HttpStatus.OK);
+	public ResponseEntity<BookResponseDto> requestBook(@RequestBody BookRequestDto bookRequestDto){
+		BookResponseDto bookResponse=new BookResponseDto();
+		Book bookInfo=bookService.requestBook(bookRequestDto);
+		bookResponse.setAuthorName(bookInfo.getAuthor());
+		bookResponse.setBookName(bookInfo.getBookName());
+		bookResponse.setMessage("Your request for availing the book is submitted successfully");
+		bookResponse.setStatusCode(200);
+		return new ResponseEntity<>(bookResponse,HttpStatus.OK);
 	}
 }

@@ -9,5 +9,5 @@ import com.hcl.lms.entity.Book;
 public interface BookService {
 
 	public List<Book> getBookList();
-	public String requestBook(BookRequestDto bookRequestDto);
+	public Book requestBook(BookRequestDto bookRequestDto);
 }
