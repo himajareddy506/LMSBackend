@@ -35,8 +35,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+<<<<<<< HEAD
+
+=======
 		
 	
+>>>>>>> 18358f98703b262a736cb5d7630e82934624cb4d
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -48,6 +52,8 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+<<<<<<< HEAD
+=======
 		<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -55,6 +61,7 @@
 			<version>2.6</version>
 		</dependency>
 
+>>>>>>> 18358f98703b262a736cb5d7630e82934624cb4d
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -76,8 +83,11 @@
 			<version>2.9.2</version>
 		</dependency>
 	</dependencies>
+<<<<<<< HEAD
+=======
 	
 	
+>>>>>>> 18358f98703b262a736cb5d7630e82934624cb4d
 
 	<build>
 		<plugins>
