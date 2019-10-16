@@ -1,10 +1,12 @@
 package com.hcl.lms.service;
 
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +20,12 @@ import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
 import com.hcl.lms.repository.BookRepository;
+import com.hcl.lms.repository.BookRequestDetailRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookServiceTest {
-
+	@Mock
+	BookRequestDetailRepository bookDetailRepository;
 	@Mock
 	BookRepository bookRepository;
 	@InjectMocks
@@ -50,5 +54,13 @@ public class BookServiceTest {
 		List<Book> bookInfo=bookServiceImpl.getBookList();
 		assertNotNull(bookInfo);		
 	}
-	
+	@Test
+	public void testRequestUser() {
+		Optional<Book> bookInfo=Optional.of(book);
+		Mockito.when(bookDetailRepository.save(Mockito.any())).thenReturn(bookRequest);
+		Mockito.when(bookRepository.findById(Mockito.anyInt())).thenReturn(bookInfo);
+		Book bookDetail=bookServiceImpl.requestBook(bookRequestInfo);
+		assertNotNull(bookDetail);
+		assertEquals("Java",bookDetail.getBookName());
+	}
 }
