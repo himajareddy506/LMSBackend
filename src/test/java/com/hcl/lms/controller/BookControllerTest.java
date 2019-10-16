@@ -16,6 +16,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
 import com.hcl.lms.dto.BookListResponseDto;
+import com.hcl.lms.dto.BookRequestDto;
+import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.service.BookServiceImpl;
 
@@ -27,6 +29,7 @@ public class BookControllerTest {
 	@InjectMocks
 	BookController bookController;
 	Book book;
+	BookRequestDto bookRequestInfo=new BookRequestDto();
 	
 	@Before
 	public void initiateData() {
@@ -37,6 +40,8 @@ public class BookControllerTest {
 		book.setAuthor("Jyoshna");
 		book.setBookName("Java");
 		book.setUserId(1);
+		bookRequestInfo.setBookId(1);
+		bookRequestInfo.setUserId(1);
 	}
 	
 	
@@ -49,6 +54,13 @@ public class BookControllerTest {
 		assertNotNull(bookListResponseDto);
 		assertEquals(200, bookListResponseDto.getStatusCode().value());
 		
+	}
+	@Test
+	public void testRequestBook() {
+		
+		Mockito.when(bookServiceImpl.requestBook(Mockito.any())).thenReturn(book);
+		ResponseEntity<BookResponseDto> response=bookController.requestBook(bookRequestInfo);
+		assertEquals(200,response.getStatusCode().value());
 	}
 }
 

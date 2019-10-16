@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.BookResponseDto;
-import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.service.BookService;
