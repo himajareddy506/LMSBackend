@@ -24,6 +24,7 @@ import com.hcl.lms.service.LoginService;
  * @author Jyoshna
  *
  */
+
 @RunWith(MockitoJUnitRunner.class)
 @WebAppConfiguration
 public class LoginControllerTest {

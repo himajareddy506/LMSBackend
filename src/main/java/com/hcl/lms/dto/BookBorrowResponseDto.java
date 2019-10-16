@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookBorrowResponseDto {
-
-	private Integer borrowId;
+	private String bookName;
+	private String authorName;
 	private Integer statusCode;
 	private String message;
 }

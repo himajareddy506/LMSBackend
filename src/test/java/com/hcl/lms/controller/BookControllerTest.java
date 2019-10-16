@@ -13,25 +13,28 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
-<<<<<<< HEAD
+import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
-import com.hcl.lms.dto.BookListResponseDto;
-import com.hcl.lms.dto.ResponseDto;
-=======
-import com.hcl.lms.dto.AddSummaryInfo;
-import com.hcl.lms.dto.AddSummaryResponse;
 import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.BookResponseDto;
->>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
+import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.service.BookServiceImpl;
 import com.hcl.lms.service.UserBookSummary;
 
+/**
+ * @author Jyoshna, Subashri, Shilendra
+ *
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class BookControllerTest {
+
+	private static final Logger logger = LoggerFactory.getLogger(BookControllerTest.class);
 
 	@Mock
 	BookServiceImpl bookServiceImpl;
@@ -40,15 +43,13 @@ public class BookControllerTest {
 	@InjectMocks
 	BookController bookController;
 	Book book;
-<<<<<<< HEAD
+
 	BookDto bookDto;
 	ResponseDto responseDto;
+	BookBorrowResponseDto bookBorrowResponseDto;
 
-=======
-	BookRequestDto bookRequestInfo=new BookRequestDto();
-	AddSummaryInfo addSummaryInfo=new AddSummaryInfo();
-	List<AddSummaryInfo> addSummaryDetail=new ArrayList<>();
->>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
+	BookRequestDto bookRequestDto;
+
 	@Before
 	public void initiateData() {
 
@@ -58,7 +59,6 @@ public class BookControllerTest {
 		book.setAuthor("Jyoshna");
 		book.setBookName("Java");
 		book.setUserId(1);
-<<<<<<< HEAD
 
 		bookDto = new BookDto();
 		bookDto.setAuthor("xyz");
@@ -69,20 +69,18 @@ public class BookControllerTest {
 		responseDto.setMessage("Added");
 		responseDto.setStatusCode(201);
 
-=======
-		bookRequestInfo.setBookId(1);
-		bookRequestInfo.setUserId(1);
-		addSummaryInfo.setAuthor(book.getAuthor());
-		addSummaryInfo.setBookName(book.getBookName());
-		addSummaryInfo.setLendDate(book.getLendDate());
-		addSummaryDetail.add(addSummaryInfo);
-		
-		
->>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
+		bookRequestDto = new BookRequestDto();
+		bookRequestDto.setBookId(1);
+		bookRequestDto.setUserId(1);
+
+		bookBorrowResponseDto = new BookBorrowResponseDto();
+		bookBorrowResponseDto.setMessage("Books Borrowed Sucessfully");
+		bookBorrowResponseDto.setStatusCode(201);
 	}
 
 	@Test
 	public void testGetBookList() {
+		logger.info("inside book list controller test");
 		List<Book> bookList = new ArrayList<>();
 		bookList.add(book);
 		Mockito.when(bookServiceImpl.getBookList()).thenReturn(bookList);
@@ -93,30 +91,27 @@ public class BookControllerTest {
 	}
 
 	@Test
-	public void saveTest() {
+	public void testSave() {
+		logger.info("inside add book controller test");
 		Mockito.when(bookServiceImpl.save(bookDto)).thenReturn(responseDto);
 		ResponseEntity<ResponseDto> actualResult = bookController.save(bookDto);
 		assertEquals(201, actualResult.getStatusCode().value());
 	}
-<<<<<<< HEAD
-=======
+
+	@Test
+	public void testBorrow() {
+		logger.info("inside borrow book controller test");
+		Mockito.when(bookServiceImpl.borrow(bookRequestDto)).thenReturn(book);
+		ResponseEntity<BookBorrowResponseDto> actualResult = bookController.borrow(bookRequestDto);
+		assertEquals(201, actualResult.getStatusCode().value());
+	}
+
 	@Test
 	public void testRequestBook() {
-		
+		logger.info("inside request book controller test");
 		Mockito.when(bookServiceImpl.requestBook(Mockito.any())).thenReturn(book);
-		ResponseEntity<BookResponseDto> response=bookController.requestBook(bookRequestInfo);
-		assertEquals(200,response.getStatusCode().value());
+		ResponseEntity<BookResponseDto> response = bookController.requestBook(bookRequestDto);
+		assertEquals(201, response.getStatusCode().value());
 	}
-	@Test
-	public void testAddSummary() {
-		Mockito.when(userBookSummary.addSummaryInfo(Mockito.anyInt())).thenReturn(addSummaryDetail);
-		ResponseEntity<AddSummaryResponse> response=bookController.addSummary(1);
-		assertNotNull(response);
-		assertEquals(200, response.getStatusCode().value());
-		
-		
-	}
-}
->>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
 
 }

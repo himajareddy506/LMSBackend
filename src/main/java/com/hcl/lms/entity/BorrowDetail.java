@@ -18,15 +18,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class BorrowDetail {
-<<<<<<< HEAD
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Id
-
-=======
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
->>>>>>> df2e5db3217fcc81dc7e6faa385ea87b81ac744e
 	private Integer borrowerId;
 	private LocalDate dateOfBorrow;
 	private LocalDate releaseDate;

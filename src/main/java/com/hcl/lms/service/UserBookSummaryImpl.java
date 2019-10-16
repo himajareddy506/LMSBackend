@@ -3,29 +3,83 @@ package com.hcl.lms.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.lms.dto.AddSummaryInfo;
+import com.hcl.lms.dto.BorrowSummaryInfo;
 import com.hcl.lms.entity.Book;
+import com.hcl.lms.entity.BorrowDetail;
+import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.repository.BookRepository;
+import com.hcl.lms.repository.BorrowDetailRepository;
+import com.hcl.lms.util.ExceptionConstants;
+
+/**
+ * @author Subashri, Jyoshna
+ *
+ */
 
 @Service
 public class UserBookSummaryImpl implements UserBookSummary {
+
+	private static final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);
+
 	@Autowired
 	BookRepository bookRepository;
-	@Override
+
+	@Autowired
+	BorrowDetailRepository borrowDetailRepository;
+
 	public List<AddSummaryInfo> addSummaryInfo(Integer userId) {
-		List<Book> bookList=bookRepository.findAllById(userId);
-		AddSummaryInfo addSummary=new AddSummaryInfo();
-		List<AddSummaryInfo> summaryInfo=new ArrayList<>();
-		for(Book book:bookList) {
-			addSummary.setAuthor(book.getAuthor());
-			addSummary.setBookName(book.getBookName());
-			addSummary.setLendDate(book.getLendDate());
-			summaryInfo.add(addSummary);
+		logger.info("inside add summary service");
+		List<AddSummaryInfo> listAddSummaryInfo = new ArrayList<>();
+		List<Book> bookList = bookRepository.findByUserId(userId);
+		if (bookList != null) {
+			bookList.stream().forEach(a -> {
+				AddSummaryInfo addSummaryInfo = new AddSummaryInfo();
+				addSummaryInfo.setAuthor(a.getAuthor());
+				addSummaryInfo.setBookName(a.getBookName());
+				addSummaryInfo.setLendDate(a.getLendDate());
+				listAddSummaryInfo.add(addSummaryInfo);
+
+			});
+			return listAddSummaryInfo;
+		} else {
+			throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);
 		}
-		return summaryInfo;
 	}
-	
+
+	@Override
+	public List<BorrowSummaryInfo> borrowSummaryInfo(Integer userId) {
+		logger.info("inside borrow summary service");
+		List<BorrowSummaryInfo> listBorrowSummaryInfo = new ArrayList<>();
+		List<Book> bookList = bookRepository.findByUserId(userId);
+		List<BorrowDetail> borrowDetailList = borrowDetailRepository.findByUserId(userId);
+
+		if (borrowDetailList != null) {
+			borrowDetailList.stream().forEach(a -> {
+
+				if (bookList != null) {
+					System.out.println(bookList.toString());
+					bookList.stream().forEach(b -> {
+
+						BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();
+						borrowSummaryInfo.setAuthor(b.getAuthor());
+						borrowSummaryInfo.setBookName(b.getBookName());
+						borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());
+						borrowSummaryInfo.setReleaseDate(a.getReleaseDate());
+						listBorrowSummaryInfo.add(borrowSummaryInfo);
+
+					});
+
+				}
+
+			});
+			return listBorrowSummaryInfo;
+		}
+		throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);
+	}
 }

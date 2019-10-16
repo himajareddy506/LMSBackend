@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lms</a> &gt; <a href="index.source.html" class="el_package">com.hcl.lms.controller</a> &gt; <span class="el_source">BookController.java</span></div><h1>BookController.java</h1><pre class="source lang-java linenums">package com.hcl.lms.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hcl.lms.dto.BookBorrowResponseDto;
+import com.hcl.lms.dto.BookDto;
+import com.hcl.lms.dto.BookListResponseDto;
+import com.hcl.lms.dto.BookRequestDto;
+import com.hcl.lms.dto.BookResponseDto;
+import com.hcl.lms.dto.ResponseDto;
+import com.hcl.lms.entity.Book;
+import com.hcl.lms.exception.CommonException;
+import com.hcl.lms.service.BookService;
+import com.hcl.lms.util.ExceptionConstants;
+
+/**
+ * @author Jyoshna, Subashri, Shilendra
+ *
+ */
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+@CrossOrigin(allowedHeaders = { &quot;*&quot;, &quot;*/&quot; }, origins = { &quot;*&quot;, &quot;*/&quot; })
+<span class="fc" id="L36">public class BookController {</span>
+
+<span class="fc" id="L38">	private static final Logger logger = LoggerFactory.getLogger(BookController.class);</span>
+
+	@Autowired
+	BookService bookService;
+
+	@GetMapping(&quot;/books&quot;)
+	public ResponseEntity&lt;BookListResponseDto&gt; getBookList() {
+<span class="fc" id="L45">		logger.info(&quot;inside book list controller&quot;);</span>
+<span class="fc" id="L46">		BookListResponseDto bookListResponseDto = new BookListResponseDto();</span>
+<span class="fc" id="L47">		List&lt;Book&gt; bookList = bookService.getBookList();</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (bookList.isEmpty()) {</span>
+<span class="nc" id="L49">			throw new CommonException(ExceptionConstants.BOOK_NOT_AVAILABLE);</span>
+		}
+<span class="fc" id="L51">		bookListResponseDto.setBookList(bookList);</span>
+<span class="fc" id="L52">		bookListResponseDto.setMessage(&quot;List of Books&quot;);</span>
+<span class="fc" id="L53">		bookListResponseDto.setStatusCode(HttpStatus.OK.value());</span>
+<span class="fc" id="L54">		return new ResponseEntity&lt;&gt;(bookListResponseDto, HttpStatus.OK);</span>
+	}
+
+	@PostMapping(&quot;/book/add&quot;)
+	public ResponseEntity&lt;ResponseDto&gt; save(@RequestBody BookDto bookDto) {
+<span class="fc" id="L59">		logger.info(&quot;inside add book controller&quot;);</span>
+<span class="fc" id="L60">		return new ResponseEntity&lt;&gt;(bookService.save(bookDto), HttpStatus.CREATED);</span>
+
+	}
+
+//	@PostMapping(&quot;/book/borrow&quot;)
+//	public ResponseEntity&lt;BookBorrowResponseDto&gt; borrow(@RequestBody BookRequestDto bookRequestDto) {
+//		logger.info(&quot;inside borrow book controller&quot;);
+//		return new ResponseEntity&lt;&gt;(bookService.borrow(bookRequestDto), HttpStatus.CREATED);
+//
+//	}
+	
+	@PostMapping(&quot;/book/borrow&quot;)
+	public ResponseEntity&lt;BookBorrowResponseDto&gt; borrow(@RequestBody BookRequestDto bookRequestDto) {
+<span class="fc" id="L73">		logger.info(&quot;inside borrow book controller&quot;);</span>
+<span class="fc" id="L74">		BookBorrowResponseDto bookBorrowResponseDto=new BookBorrowResponseDto();</span>
+<span class="fc" id="L75">		Book bookInfo = bookService.borrow(bookRequestDto);</span>
+<span class="fc" id="L76">		bookBorrowResponseDto.setAuthorName(bookInfo.getAuthor());</span>
+<span class="fc" id="L77">		bookBorrowResponseDto.setBookName(bookInfo.getBookName());</span>
+<span class="fc" id="L78">		bookBorrowResponseDto.setMessage(&quot;Your Borrowed book is&quot;);</span>
+<span class="fc" id="L79">		bookBorrowResponseDto.setStatusCode(201);</span>
+<span class="fc" id="L80">		return new ResponseEntity&lt;&gt;(bookBorrowResponseDto, HttpStatus.CREATED);</span>
+
+	}
+
+	/**
+	 * @param bookId,userId
+	 * @return authorName,bookName,message,statusCode
+	 *
+	 */
+
+	@PostMapping(&quot;/book/request&quot;)
+	public ResponseEntity&lt;BookResponseDto&gt; requestBook(@RequestBody BookRequestDto bookRequestDto) {
+<span class="fc" id="L92">		logger.info(&quot;inside request book controller&quot;);</span>
+<span class="fc" id="L93">		BookResponseDto bookResponse = new BookResponseDto();</span>
+<span class="fc" id="L94">		Book bookInfo = bookService.requestBook(bookRequestDto);</span>
+<span class="fc" id="L95">		bookResponse.setAuthorName(bookInfo.getAuthor());</span>
+<span class="fc" id="L96">		bookResponse.setBookName(bookInfo.getBookName());</span>
+<span class="fc" id="L97">		bookResponse.setMessage(&quot;Your request for availing the book is submitted successfully&quot;);</span>
+<span class="fc" id="L98">		bookResponse.setStatusCode(200);</span>
+<span class="fc" id="L99">		return new ResponseEntity&lt;&gt;(bookResponse, HttpStatus.CREATED);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

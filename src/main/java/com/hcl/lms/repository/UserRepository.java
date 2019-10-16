@@ -9,5 +9,6 @@ import com.hcl.lms.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 
 	User findByEmailIdAndPasscode(String emailId, String passcode);
+	User findByEmailId(String emailId);
 
 }

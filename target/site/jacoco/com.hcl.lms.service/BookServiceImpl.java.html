@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lms</a> &gt; <a href="index.source.html" class="el_package">com.hcl.lms.service</a> &gt; <span class="el_source">BookServiceImpl.java</span></div><h1>BookServiceImpl.java</h1><pre class="source lang-java linenums">package com.hcl.lms.service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hcl.lms.dto.BookBorrowResponseDto;
+import com.hcl.lms.dto.BookDto;
+import com.hcl.lms.dto.BookRequestDto;
+import com.hcl.lms.dto.ResponseDto;
+import com.hcl.lms.entity.Book;
+import com.hcl.lms.entity.BookRequestDetail;
+import com.hcl.lms.entity.BorrowDetail;
+import com.hcl.lms.repository.BookRepository;
+import com.hcl.lms.repository.BookRequestDetailRepository;
+import com.hcl.lms.repository.BorrowDetailRepository;
+
+/**
+ * @author Jyoshna, Subashri, Shilendra
+ *
+ */
+
+@Service
+<span class="fc" id="L31">public class BookServiceImpl implements BookService {</span>
+
+<span class="fc" id="L33">	private static final Logger LOGGER = LoggerFactory.getLogger(BookServiceImpl.class);</span>
+
+	@Autowired
+	BookRepository bookRepository;
+	@Autowired
+	BookRequestDetailRepository bookRequestDetailRepository;
+	@Autowired
+	BorrowDetailRepository borrowDetailRepository;
+
+	@Override
+	public List&lt;Book&gt; getBookList() {
+<span class="fc" id="L44">		LOGGER.info(&quot;inside list of books service&quot;);</span>
+<span class="fc" id="L45">		return bookRepository.findAll();</span>
+	}
+
+	@Override
+	public ResponseDto save(BookDto bookDto) {
+<span class="fc" id="L50">		LOGGER.info(&quot;inside add book service&quot;);</span>
+<span class="fc" id="L51">		Random random = new Random();</span>
+<span class="fc" id="L52">		Book book = new Book();</span>
+<span class="fc" id="L53">		ResponseDto responseDto = new ResponseDto();</span>
+<span class="fc" id="L54">		BeanUtils.copyProperties(bookDto, book);</span>
+<span class="fc" id="L55">		book.setLendDate(LocalDate.now());</span>
+<span class="fc" id="L56">		book.setBookCode(random.nextInt(1000));</span>
+<span class="fc" id="L57">		bookRepository.save(book);</span>
+<span class="fc" id="L58">		responseDto.setMessage(&quot;Book Added Successfully&quot;);</span>
+<span class="fc" id="L59">		responseDto.setStatusCode(200);</span>
+<span class="fc" id="L60">		return responseDto;</span>
+	}
+
+//	@Override
+//	public BookBorrowResponseDto borrow(BookRequestDto bookRequestDto) {
+//		LOGGER.info(&quot;inside borrow book service&quot;);
+//		BorrowDetail borrowDetail = new BorrowDetail();
+//		BookBorrowResponseDto borrowResponseDto = new BookBorrowResponseDto();
+//		BeanUtils.copyProperties(borrowResponseDto, borrowDetail);
+//		borrowDetail.setBookId(bookRequestDto.getBookId());
+//		borrowDetail.setUserId(bookRequestDto.getUserId());
+//		borrowDetail.setDateOfBorrow(LocalDate.now());
+//		borrowDetail.setReleaseDate(LocalDate.now().plusDays(3));
+//		borrowDetail.setStatus(&quot;availed&quot;);
+//		borrowDetailRepository.save(borrowDetail);
+//		borrowResponseDto.setMessage(&quot;Book Borrowed Successfully&quot;);
+//		borrowResponseDto.setStatusCode(201);
+//		return borrowResponseDto;
+//	}
+	
+	@Override
+	public Book borrow(BookRequestDto bookRequestDto) {
+<span class="fc" id="L82">		LOGGER.info(&quot;inside borrow book service&quot;);</span>
+<span class="fc" id="L83">		BorrowDetail borrowDetail = new BorrowDetail();</span>
+<span class="fc" id="L84">		BookBorrowResponseDto borrowResponseDto = new BookBorrowResponseDto();</span>
+<span class="fc" id="L85">		BeanUtils.copyProperties(borrowResponseDto, borrowDetail);</span>
+<span class="fc" id="L86">		borrowDetail.setBookId(bookRequestDto.getBookId());</span>
+<span class="fc" id="L87">		borrowDetail.setUserId(bookRequestDto.getUserId());</span>
+<span class="fc" id="L88">		borrowDetail.setDateOfBorrow(LocalDate.now());</span>
+<span class="fc" id="L89">		borrowDetail.setReleaseDate(LocalDate.now().plusDays(3));</span>
+<span class="fc" id="L90">		borrowDetail.setStatus(&quot;availed&quot;);</span>
+<span class="fc" id="L91">		borrowDetailRepository.save(borrowDetail);</span>
+<span class="fc" id="L92">		Optional&lt;Book&gt; book = bookRepository.findById(bookRequestDto.getBookId());</span>
+<span class="fc" id="L93">		return book.get();</span>
+	}
+
+	@Override
+	public Book requestBook(BookRequestDto bookRequestDto) {
+<span class="fc" id="L98">		LOGGER.info(&quot;inside book request service&quot;);</span>
+<span class="fc" id="L99">		BookRequestDetail bookRequestrequestDetail = new BookRequestDetail();</span>
+<span class="fc" id="L100">		BeanUtils.copyProperties(bookRequestDto, bookRequestrequestDetail);</span>
+<span class="fc" id="L101">		bookRequestDetailRepository.save(bookRequestrequestDetail);</span>
+<span class="fc" id="L102">		Optional&lt;Book&gt; book = bookRepository.findById(bookRequestDto.getBookId());</span>
+<span class="fc" id="L103">		return book.get();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

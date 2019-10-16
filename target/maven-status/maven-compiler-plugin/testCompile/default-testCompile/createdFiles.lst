@@ -1,0 +1,9 @@
+com\hcl\lms\service\UserBookSummaryServiceTest.class
+com\hcl\lms\service\BookServiceTest.class
+com\hcl\lms\service\LoginServiceTest.class
+com\hcl\lms\controller\BookControllerTest.class
+com\hcl\lms\service\RegistrationServiceTest.class
+com\hcl\lms\controller\RegistrationControllerTest.class
+com\hcl\lms\LmsApplicationTests.class
+com\hcl\lms\controller\LoginControllerTest.class
+com\hcl\lms\controller\UserBookSummaryControllerTest.class
