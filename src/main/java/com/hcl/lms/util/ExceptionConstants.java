@@ -7,5 +7,6 @@ public class ExceptionConstants {
 	}
 
 	public static final String USER_NOT_FOUND = "Invalid credentials";
+	public static final String BOOK_NOT_AVAILABLE = "No Books Available";
 
 }
