@@ -20,4 +20,5 @@ public class BorrowDetail {
 	private LocalDate releaseDate;
 	private Integer bookId;
 	private Integer userId;
+	private String status;
 }
