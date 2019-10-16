@@ -1,5 +1,6 @@
 package com.hcl.lms.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.hcl.lms.dto.BookDto;
+import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.repository.BookRepository;
 
@@ -24,6 +27,7 @@ public class BookServiceTest {
 	@InjectMocks
 	BookServiceImpl bookServiceImpl;
 	Book book=new Book();
+	BookDto bookDto;
 	@Before
 	public void initiateDate() {
 		book=new Book();
@@ -32,6 +36,12 @@ public class BookServiceTest {
 		book.setAuthor("Jyoshna");
 		book.setBookName("Java");
 		book.setUserId(1);
+		
+		bookDto = new BookDto();
+		 bookDto.setAuthor("Shilendra");
+		 bookDto.setBookName("java");
+		 bookDto.setUserId(1);
+
 	}
 	
 	@Test
@@ -42,4 +52,16 @@ public class BookServiceTest {
 		List<Book> bookInfo=bookServiceImpl.getBookList();
 		assertNotNull(bookInfo);		
 	}
+	
+	@Test
+	public void addbookTest() {
+	 
+	 Mockito.when(bookRepository.save(Mockito.anyObject())).thenReturn(Mockito.anyObject());
+	 
+	 ResponseDto responseDto = bookServiceImpl.save(bookDto);
+	 
+	 assertEquals("Book Added Successfully", responseDto.getMessage());
+	 
+	}
+
 }

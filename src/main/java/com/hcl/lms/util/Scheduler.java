@@ -27,7 +27,8 @@ public class Scheduler {
 	public void bookReleaseSchedule() {
 		List<BorrowDetail> borrowList=borrowDetailRepository.findByReleaseDate(LocalDate.now());
 		borrowList.stream().forEach(borrowInfo -> {
-			borrowInfo.setStatus(ExceptionConstants.releaseStatus);		
+			borrowInfo.setStatus(ExceptionConstants.releaseStatus);	
+			borrowDetailRepository.save(borrowInfo);
 		});
 		}
 	}

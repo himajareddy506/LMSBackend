@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.lms.dto.BookBorrowResponseDto;
+import com.hcl.lms.dto.BookDto;
 import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.ResponseDto;
@@ -46,6 +48,14 @@ public class BookController {
 		return new ResponseEntity<>(bookListResponseDto, HttpStatus.OK);
 	}
 	
+	@PostMapping("/book/add")
+	public ResponseEntity<ResponseDto> save(@RequestBody BookDto bookDto) {
+
+		return new ResponseEntity<>(bookService.save(bookDto), HttpStatus.CREATED);
+
+	
+	}
+	
 	/**
 	 * @param bookId,userId
 	 * @return Success message on successful request
@@ -58,5 +68,13 @@ public class BookController {
 		response.setMessage(message);
 		response.setStatusCode(200);
 		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	@PostMapping("/book/borrow")
+	public ResponseEntity<BookBorrowResponseDto> borrow(@RequestBody BookRequestDto bookRequestDto) {
+
+		return new ResponseEntity<>(bookService.borrow(bookRequestDto), HttpStatus.CREATED);
+
+	
 	}
 }
