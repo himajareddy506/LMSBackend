@@ -9,5 +9,4 @@ public class ResponseDto {
 	
 	private String message;
 	private Integer statusCode;
-	private Integer bookCode;
 }

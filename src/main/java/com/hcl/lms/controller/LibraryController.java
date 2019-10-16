@@ -25,7 +25,7 @@ public class LibraryController {
 	@Autowired
 	private LibraryService libraryService;
 
-	@PostMapping("/book")
+	@PostMapping("/book/add")
 	public ResponseEntity<ResponseDto> save(@RequestBody BookDto bookDto) {
 
 		return new ResponseEntity<>(libraryService.save(bookDto), HttpStatus.CREATED);
