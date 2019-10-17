@@ -45,9 +45,9 @@ public class UserBookSummaryController {
 		return new ResponseEntity<AddSummaryResponse>(addSummaryResponse, HttpStatus.OK);
 	}
 
-	@GetMapping("/book/{userId}/borrowSummary controller")
+	@GetMapping("/book/{userId}/borrowSummary")
 	public ResponseEntity<BorrowSummaryResponseDto> borrowSummary(@PathVariable("userId") Integer userId) {
-		logger.info("inside borrow book summary");
+		logger.info("inside borrow book summary controller");
 		BorrowSummaryResponseDto borrowSummaryResponseDto = new BorrowSummaryResponseDto();
 		List<BorrowSummaryInfo> borrowSummaryInfo = userBookSummary.borrowSummaryInfo(userId);
 		borrowSummaryResponseDto.setBorrowSummaryInfo(borrowSummaryInfo);

@@ -15,4 +15,6 @@ public interface BorrowDetailRepository extends JpaRepository<BorrowDetail, Inte
 	List<BorrowDetail> findByUserId(Integer userId);
 
 	BorrowDetail findByBookIdAndUserId(Integer bookId, Integer userId);
+
+	List<BorrowDetail> findByBookId(Integer bookId);
 }

@@ -1,6 +1,7 @@
 package com.hcl.lms.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
 import com.hcl.lms.dto.BookRequestDto;
+import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
@@ -42,18 +44,51 @@ public class BookServiceImpl implements BookService {
 	BorrowDetailRepository borrowDetailRepository;
 
 	@Override
-	public List<Book> getBookList() {
+	public List<BookResponseDto> getBookList() {
 		LOGGER.info("inside list of books service");
-		return bookRepository.findAll();
+		List<BookResponseDto> bookResponseList=new ArrayList<>();
+		List<BorrowDetail> borrowInfo=new ArrayList<>();
+		List<Book> bookInfo=bookRepository.findAll();
+		for(Book book:bookInfo) {
+			borrowInfo=borrowDetailRepository.findByBookId(book.getBookId());
+			
+			if(borrowInfo==null) {
+				BookResponseDto bookResponse=new BookResponseDto();
+
+				bookResponse.setAuthorName(book.getAuthor());
+				bookResponse.setBookName(book.getBookName());
+				bookResponse.setStatus("Available");
+				bookResponse.setStatusCode(200);
+				bookResponse.setMessage("List of books");
+				bookResponseList.add(bookResponse);
+			}
+			else {
+				for(BorrowDetail borrowData:borrowInfo) {
+					BookResponseDto bookResponse=new BookResponseDto();
+
+					bookResponse.setAuthorName(book.getAuthor());
+					bookResponse.setBookName(book.getBookName());
+					bookResponse.setStatus(borrowData.getStatus());
+					bookResponse.setStatusCode(200);
+					bookResponse.setMessage("List of books");
+					bookResponseList.add(bookResponse);
+				}
+			}
+			
+			
+			}
+		
+		
+		return bookResponseList;
 	}
 
 	@Override
 	public ResponseDto save(BookDto bookDto) {
 		LOGGER.info("inside add book service");
 		Book listBook=bookRepository.findByBookNameAndAuthor(bookDto.getBookName(), bookDto.getAuthor());
-		if(((listBook.getBookName().equalsIgnoreCase(bookDto.getBookName()))&&(listBook.getAuthor().equalsIgnoreCase(bookDto.getAuthor())))) {
+		/*if(((listBook.getBookName().equalsIgnoreCase(bookDto.getBookName()))&&(listBook.getAuthor().equalsIgnoreCase(bookDto.getAuthor())))) {
 			throw new CommonException(ExceptionConstants.BOOK_EXIST);
-		}
+		}*/
 		Random random = new Random();
 		Book book = new Book();
 		ResponseDto responseDto = new ResponseDto();
@@ -67,13 +102,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book borrow(BookRequestDto bookRequestDto) {
+	public BookBorrowResponseDto borrow(BookRequestDto bookRequestDto) {
 		LOGGER.info("inside borrow book service");
 		BorrowDetail borrow=borrowDetailRepository.findByBookIdAndUserId(bookRequestDto.getBookId(), bookRequestDto.getUserId());
 		if(borrow!=null) {
 			throw new CommonException(ExceptionConstants.ALREADY_AVAILED);
 		}
+		BookBorrowResponseDto bookBorrowResponseDto=new BookBorrowResponseDto();
 		BorrowDetail borrowDetail = new BorrowDetail();
+		Book bookInfo=null;
 		BookBorrowResponseDto borrowResponseDto = new BookBorrowResponseDto();
 		BeanUtils.copyProperties(borrowResponseDto, borrowDetail);
 		borrowDetail.setBookId(bookRequestDto.getBookId());
@@ -83,7 +120,17 @@ public class BookServiceImpl implements BookService {
 		borrowDetail.setStatus("availed");
 		borrowDetailRepository.save(borrowDetail);
 		Optional<Book> book = bookRepository.findById(bookRequestDto.getBookId());
-		return book.get();
+		if(!book.isPresent()) {
+			throw new CommonException(ExceptionConstants.BOOK_NOT_AVAILABLE);
+		}
+		bookInfo=book.get();
+		bookBorrowResponseDto.setAuthorName(bookInfo.getAuthor());
+		bookBorrowResponseDto.setBookName(bookInfo.getBookName());
+		bookBorrowResponseDto.setMessage("You have borrowed a book");
+		bookBorrowResponseDto.setStatusCode(201);
+		bookBorrowResponseDto.setStatus("Availed");
+		
+		return bookBorrowResponseDto;
 	}
 
 	@Override

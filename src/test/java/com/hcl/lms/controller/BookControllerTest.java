@@ -47,7 +47,7 @@ public class BookControllerTest {
 	BookDto bookDto;
 	ResponseDto responseDto;
 	BookBorrowResponseDto bookBorrowResponseDto;
-
+	BookResponseDto bookResponse;
 	BookRequestDto bookRequestDto;
 
 	@Before
@@ -76,15 +76,27 @@ public class BookControllerTest {
 		bookBorrowResponseDto = new BookBorrowResponseDto();
 		bookBorrowResponseDto.setMessage("Books Borrowed Sucessfully");
 		bookBorrowResponseDto.setStatusCode(201);
+		bookBorrowResponseDto.setAuthorName("Jyoshna");
+		bookBorrowResponseDto.setBookName("Java");
+		bookBorrowResponseDto.setStatus("Availed");
+		bookResponse = new BookResponseDto();
+		bookResponse.setMessage("List of Books");
+		bookResponse.setStatusCode(201);
+		bookResponse.setAuthorName("Jyoshna");
+		bookResponse.setBookName("Java");
+		bookResponse.setStatus("Availed");
 	}
+	
 
 	@Test
 	public void testGetBookList() {
+		List<Book> bookList=new ArrayList<>();
 		logger.info("inside book list controller test");
-		List<Book> bookList = new ArrayList<>();
 		bookList.add(book);
-		Mockito.when(bookServiceImpl.getBookList()).thenReturn(bookList);
-		ResponseEntity<BookListResponseDto> bookListResponseDto = bookController.getBookList();
+		List<BookResponseDto> responseList=new ArrayList<>();
+		responseList.add(bookResponse);
+		Mockito.when(bookServiceImpl.getBookList()).thenReturn(responseList);
+		ResponseEntity<List<BookResponseDto>> bookListResponseDto = bookController.getBookList();
 		assertNotNull(bookListResponseDto);
 		assertEquals(200, bookListResponseDto.getStatusCode().value());
 
@@ -101,7 +113,7 @@ public class BookControllerTest {
 	@Test
 	public void testBorrow() {
 		logger.info("inside borrow book controller test");
-		Mockito.when(bookServiceImpl.borrow(bookRequestDto)).thenReturn(book);
+		Mockito.when(bookServiceImpl.borrow(bookRequestDto)).thenReturn(bookBorrowResponseDto);
 		ResponseEntity<BookBorrowResponseDto> actualResult = bookController.borrow(bookRequestDto);
 		assertEquals(201, actualResult.getStatusCode().value());
 	}
