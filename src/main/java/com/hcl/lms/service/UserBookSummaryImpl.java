@@ -58,28 +58,27 @@ public class UserBookSummaryImpl implements UserBookSummary {
 		List<BorrowSummaryInfo> listBorrowSummaryInfo = new ArrayList<>();
 		List<Book> bookList = bookRepository.findByUserId(userId);
 		List<BorrowDetail> borrowDetailList = borrowDetailRepository.findByUserId(userId);
-
+		BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();
 		if (borrowDetailList != null) {
 			borrowDetailList.stream().forEach(a -> {
-
-				if (bookList != null) {
-					System.out.println(bookList.toString());
-					bookList.stream().forEach(b -> {
-
-						BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();
-						borrowSummaryInfo.setAuthor(b.getAuthor());
-						borrowSummaryInfo.setBookName(b.getBookName());
+						
 						borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());
 						borrowSummaryInfo.setReleaseDate(a.getReleaseDate());
-						listBorrowSummaryInfo.add(borrowSummaryInfo);
-
-					});
-
-				}
-
 			});
-			return listBorrowSummaryInfo;
 		}
-		throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);
+			if (bookList != null) {
+				bookList.stream().forEach(a -> {
+							
+							borrowSummaryInfo.setAuthor(a.getAuthor());
+							borrowSummaryInfo.setBookName(a.getBookName());
+							listBorrowSummaryInfo.add(borrowSummaryInfo);
+
+				});
+
+			
+			
+		}		
+	
+		return listBorrowSummaryInfo;
 	}
 }
