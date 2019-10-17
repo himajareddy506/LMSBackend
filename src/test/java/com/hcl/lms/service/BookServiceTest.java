@@ -2,10 +2,12 @@ package com.hcl.lms.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +18,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
 import com.hcl.lms.dto.BookRequestDto;
+import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
 import com.hcl.lms.entity.BorrowDetail;
@@ -101,7 +105,15 @@ public class BookServiceTest {
 		List<Book> bookResponse = bookServiceImpl.getBookList();
 		assertNotNull(bookResponse);
 	}
-
+	
+	@Test
+	public void testSave() {
+		Mockito.when(bookRepository.save(Mockito.any())).thenReturn(book);
+		ResponseDto response=bookServiceImpl.save(bookDto);
+		assertNotNull(response);
+		assertEquals("Book Added Successfully", response.getMessage());
+	}
+	
 	@Test
 	public void testBorrow() {
 		LOGGER.info("inside borrow book service test");

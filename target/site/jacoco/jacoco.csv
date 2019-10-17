@@ -1,10 +1,10 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 lms,com.hcl.lms,LmsApplication,8,0,0,0,3,0,2,0,2,0
-lms,com.hcl.lms.controller,BookController,0,79,0,0,0,18,0,6,0,6
+lms,com.hcl.lms.controller,BookController,5,81,1,1,1,19,1,6,0,6
 lms,com.hcl.lms.controller,UserBookSummaryController,0,63,0,0,0,16,0,4,0,4
 lms,com.hcl.lms.controller,LoginController,0,21,0,0,0,5,0,3,0,3
 lms,com.hcl.lms.controller,RegistrationController,0,32,0,0,0,8,0,3,0,3
-lms,com.hcl.lms.service,BookServiceImpl,56,144,3,3,14,38,4,5,1,5
+lms,com.hcl.lms.service,BookServiceImpl,15,189,3,3,3,50,3,6,0,6
 lms,com.hcl.lms.service,LoginServiceImpl,0,50,0,2,0,14,0,4,0,3
 lms,com.hcl.lms.service,RegistrationServiceImpl,5,65,1,5,1,17,1,5,0,3
 lms,com.hcl.lms.service,UserBookSummaryImpl,56,49,1,1,14,14,3,4,2,4
@@ -16,9 +16,9 @@ lms,com.hcl.lms.exception,CommonException,0,4,0,0,0,2,0,1,0,1
 lms,com.hcl.lms.dto,LoginResponseDto,6,18,0,0,2,3,2,5,2,5
 lms,com.hcl.lms.dto,RegistrationRequestDto,0,31,0,0,0,6,0,9,0,9
 lms,com.hcl.lms.dto,AddSummaryResponse,9,15,0,0,3,2,3,4,3,4
-lms,com.hcl.lms.dto,BookBorrowResponseDto,9,22,0,0,3,3,3,6,3,6
-lms,com.hcl.lms.dto,ResponseDto,6,11,0,0,2,2,2,3,2,3
-lms,com.hcl.lms.dto,BookDto,9,15,0,0,3,2,3,4,3,4
+lms,com.hcl.lms.dto,BookBorrowResponseDto,12,26,0,0,4,3,4,7,4,7
+lms,com.hcl.lms.dto,ResponseDto,3,14,0,0,1,3,1,4,1,4
+lms,com.hcl.lms.dto,BookDto,0,24,0,0,0,5,0,7,0,7
 lms,com.hcl.lms.dto,BorrowSummaryResponseDto,9,15,0,0,3,2,3,4,3,4
 lms,com.hcl.lms.dto,BookListResponseDto,24,0,0,0,5,0,7,0,7,0
 lms,com.hcl.lms.dto,AddSummaryInfo,6,18,0,0,2,3,2,5,2,5
@@ -27,7 +27,7 @@ lms,com.hcl.lms.dto,LoginRequestDto,0,17,0,0,0,4,0,5,0,5
 lms,com.hcl.lms.dto,BookResponseDto,15,23,0,0,5,2,5,6,5,6
 lms,com.hcl.lms.dto,BookRequestDto,0,17,0,0,0,4,0,5,0,5
 lms,com.hcl.lms.entity,User,18,34,0,0,6,3,6,9,6,9
-lms,com.hcl.lms.entity,Book,16,36,0,0,4,5,5,10,5,10
+lms,com.hcl.lms.entity,Book,9,43,0,0,3,6,3,12,3,12
 lms,com.hcl.lms.entity,BorrowDetail,15,23,0,0,5,2,5,6,5,6
 lms,com.hcl.lms.entity,BookRequestDetail,13,11,0,0,3,2,4,3,4,3
 lms,com.hcl.lms.config,SwaggerConfig,14,0,0,0,3,0,2,0,2,0

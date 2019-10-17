@@ -66,7 +66,6 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public ResponseDto save(BookDto bookDto) {
 		LOGGER.info("inside add book service");
-		System.out.println(bookDto.getUserId());
 		Book book = new Book();
 		ResponseDto responseDto = new ResponseDto();
 		BeanUtils.copyProperties(bookDto, book);

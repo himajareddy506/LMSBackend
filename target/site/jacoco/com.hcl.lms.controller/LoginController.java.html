@@ -30,21 +30,18 @@ import com.hcl.lms.service.LoginService;
 	@Autowired
 	LoginService loginService;
 
-	/*
-	 * This method is used to login the customer by providing valid credentials
+	/**
+	 * This method is used to login the customer by providing valid credentials.
 	 * 
-	 * @Param LoginRequestDto which includes emailId,password
-	 * 
-	 * @return LoginResponseDto is the return object which includes
-	 * customerId,message,statusCode
-	 * 
+	 * @param parameters emailId, password
+	 * @return This method returns success message on login
 	 */
 
 	@PostMapping(&quot;/login&quot;)
 	public ResponseEntity&lt;LoginResponseDto&gt; verify(@RequestBody LoginRequestDto loginRequestDto) {
-<span class="fc" id="L45">		logger.info(&quot;inside login controller&quot;);</span>
-<span class="fc" id="L46">		LoginResponseDto loginResponseDto = loginService.login(loginRequestDto);</span>
-<span class="fc" id="L47">		return new ResponseEntity&lt;&gt;(loginResponseDto, HttpStatus.CREATED);</span>
+<span class="fc" id="L42">		logger.info(&quot;inside login controller&quot;);</span>
+<span class="fc" id="L43">		LoginResponseDto loginResponseDto = loginService.login(loginRequestDto);</span>
+<span class="fc" id="L44">		return new ResponseEntity&lt;&gt;(loginResponseDto, HttpStatus.CREATED);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
