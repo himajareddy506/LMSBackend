@@ -69,10 +69,6 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public ResponseDto save(BookDto bookDto) {
 		LOGGER.info("inside add book service");		
-		Book listBook=bookRepository.findByBookNameAndAuthor(bookDto.getBookName(), bookDto.getAuthor());
-		if(((listBook.getBookName().equalsIgnoreCase(bookDto.getBookName()))&&(listBook.getAuthor().equalsIgnoreCase(bookDto.getAuthor())))) {
-			throw new CommonException(ExceptionConstants.BOOK_EXIST);
-		}
 		Book book = new Book();
 		ResponseDto responseDto = new ResponseDto();
 		BeanUtils.copyProperties(bookDto, book);
