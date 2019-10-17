@@ -31,20 +31,21 @@ import com.hcl.lms.service.RegistrationService;
 	RegistrationService registrationService;
 
 	/**
-	 * @param User FirstName,LastName,EmailID,Password
-	 * @return StatusCode,Message
-	 *
+	 * This method is used to register user by providing user info.
+	 * 
+	 * @param parameters firstName,lastName,emailId,password
+	 * @return This method returns success message on registration
 	 */
 
 	@PostMapping(&quot;/register&quot;)
 	public ResponseEntity&lt;ResponseDto&gt; registerUser(@RequestBody RegistrationRequestDto registrationRequestDto) {
-<span class="fc" id="L41">		logger.info(&quot;inside user registration controller&quot;);</span>
-<span class="fc" id="L42">		ResponseDto responseDto = new ResponseDto();</span>
-<span class="fc" id="L43">		String message = registrationService.registerUser(registrationRequestDto);</span>
-<span class="fc" id="L44">		responseDto.setMessage(message);</span>
-<span class="fc" id="L45">		responseDto.setStatusCode(200);</span>
+<span class="fc" id="L42">		logger.info(&quot;inside user registration controller&quot;);</span>
+<span class="fc" id="L43">		ResponseDto responseDto = new ResponseDto();</span>
+<span class="fc" id="L44">		String message = registrationService.registerUser(registrationRequestDto);</span>
+<span class="fc" id="L45">		responseDto.setMessage(message);</span>
+<span class="fc" id="L46">		responseDto.setStatusCode(200);</span>
 
-<span class="fc" id="L47">		return new ResponseEntity&lt;&gt;(responseDto, HttpStatus.CREATED);</span>
+<span class="fc" id="L48">		return new ResponseEntity&lt;&gt;(responseDto, HttpStatus.CREATED);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

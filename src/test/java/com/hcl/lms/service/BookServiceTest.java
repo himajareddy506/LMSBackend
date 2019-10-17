@@ -21,10 +21,8 @@ import org.springframework.beans.BeanUtils;
 
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
-import com.hcl.lms.dto.ResponseDto;
-
 import com.hcl.lms.dto.BookRequestDto;
-
+import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
 import com.hcl.lms.entity.BorrowDetail;
@@ -90,10 +88,9 @@ public class BookServiceTest {
 		borrowDetail = new BorrowDetail();
 		borrowDetail.setBookId(1);
 		borrowDetail.setBorrowerId(1);
-		borrowDetail.setStatus("Book Borrowed Successfully");
+
 		borrowDetail.setDateOfBorrow(LocalDate.now());
 		borrowDetail.setReleaseDate(LocalDate.now().plusDays(3));
-		borrowDetail.setStatus("availed");
 
 	}
 
@@ -101,28 +98,31 @@ public class BookServiceTest {
 	public void testGetBookList() {
 		LOGGER.info("inside list of books service test");
 		List<Book> bookList = new ArrayList<>();
+		List<BorrowDetail> borrowList = new ArrayList<>();
+		borrowList.add(borrowDetail);
 		bookList.add(book);
 		Mockito.when(bookRepository.findAll()).thenReturn(bookList);
-		List<Book> bookInfo = bookServiceImpl.getBookList();
-		assertNotNull(bookInfo);
+		List<Book> bookResponse = bookServiceImpl.getBookList();
+		assertNotNull(bookResponse);
 	}
-
+	
 	@Test
 	public void testSave() {
-		LOGGER.info("inside add book service test");
-		Mockito.when(bookRepository.save(Mockito.anyObject())).thenReturn(Mockito.anyObject());
-		ResponseDto responseDto = bookServiceImpl.save(bookDto);
-		assertEquals("Book Added Successfully", responseDto.getMessage());
-
+		Mockito.when(bookRepository.save(Mockito.any())).thenReturn(book);
+		ResponseDto response=bookServiceImpl.save(bookDto);
+		assertNotNull(response);
+		assertEquals("Book Added Successfully", response.getMessage());
 	}
-
+	
 	@Test
 	public void testBorrow() {
 		LOGGER.info("inside borrow book service test");
 		Optional<Book> bookInfo = Optional.of(book);
 		Mockito.when(borrowDetailRepository.save(Mockito.any())).thenReturn(borrowDetail);
+		Mockito.when(bookRepository.findByBookId(Mockito.anyInt())).thenReturn(book);
 		Mockito.when(bookRepository.findById(Mockito.anyInt())).thenReturn(bookInfo);
-		Book bookDetail = bookServiceImpl.borrow(bookRequestDto);
+
+		BookBorrowResponseDto bookDetail = bookServiceImpl.borrow(bookRequestDto);
 		assertNotNull(bookDetail);
 		assertEquals("Java", bookDetail.getBookName());
 	}

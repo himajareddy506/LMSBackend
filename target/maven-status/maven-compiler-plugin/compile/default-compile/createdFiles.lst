@@ -34,7 +34,6 @@ com\hcl\lms\service\RegistrationService.class
 com\hcl\lms\util\Scheduler.class
 com\hcl\lms\dto\AddSummaryInfo.class
 com\hcl\lms\service\BookServiceImpl.class
-com\hcl\lms\repository\LibraryRepository.class
 com\hcl\lms\config\SwaggerConfig.class
 com\hcl\lms\controller\LoginController.class
 com\hcl\lms\dto\LoginResponseDto.class

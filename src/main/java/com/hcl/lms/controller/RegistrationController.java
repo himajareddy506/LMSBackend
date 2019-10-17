@@ -31,9 +31,10 @@ public class RegistrationController {
 	RegistrationService registrationService;
 
 	/**
-	 * @param User FirstName,LastName,EmailID,Password
-	 * @return StatusCode,Message
-	 *
+	 * This method is used to register user by providing user info.
+	 * 
+	 * @param parameters firstName,lastName,emailId,password
+	 * @return This method returns success message on registration
 	 */
 
 	@PostMapping("/register")

@@ -34,6 +34,13 @@ public class UserBookSummaryController {
 
 	@Autowired
 	UserBookSummary userBookSummary;
+	
+	/**
+	 * This method is to get the user lend info.
+	 * 
+	 * @param parameter userId
+	 * @return This method returns user lend info
+	 */
 
 	@GetMapping("/book/{userId}/lendSummary")
 	public ResponseEntity<AddSummaryResponse> addSummary(@PathVariable("userId") Integer userId) {
@@ -43,18 +50,25 @@ public class UserBookSummaryController {
 		addSummaryResponse.setAddedBookInfo(summaryInfo);
 		addSummaryResponse.setMessage("Lended Books");
 		addSummaryResponse.setStatusCode(200);
-		return new ResponseEntity<AddSummaryResponse>(addSummaryResponse, HttpStatus.OK);
+		return new ResponseEntity<>(addSummaryResponse, HttpStatus.OK);
 	}
+	
+	/**
+	 * This method is to get the user borrow info.
+	 * 
+	 * @param parameter userId
+	 * @return This method returns user borrow info
+	 */
 
-	@GetMapping("/book/{userId}/borrowSummary controller")
+	@GetMapping("/book/{userId}/borrowSummary")
 	public ResponseEntity<BorrowSummaryResponseDto> borrowSummary(@PathVariable("userId") Integer userId) {
-		logger.info("inside borrow book summary");
+		logger.info("inside borrow book summary controller");
 		BorrowSummaryResponseDto borrowSummaryResponseDto = new BorrowSummaryResponseDto();
 		List<BorrowSummaryInfo> borrowSummaryInfo = userBookSummary.borrowSummaryInfo(userId);
 		borrowSummaryResponseDto.setBorrowSummaryInfo(borrowSummaryInfo);
 		borrowSummaryResponseDto.setMessage("Borrowed Books");
 		borrowSummaryResponseDto.setStatusCode(201);
-		return new ResponseEntity<BorrowSummaryResponseDto>(borrowSummaryResponseDto, HttpStatus.CREATED);
+		return new ResponseEntity<>(borrowSummaryResponseDto, HttpStatus.CREATED);
 	}
 
 }

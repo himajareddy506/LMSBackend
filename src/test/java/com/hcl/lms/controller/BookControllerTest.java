@@ -16,10 +16,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
-import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.dto.ResponseDto;
@@ -47,7 +45,7 @@ public class BookControllerTest {
 	BookDto bookDto;
 	ResponseDto responseDto;
 	BookBorrowResponseDto bookBorrowResponseDto;
-
+	BookResponseDto bookResponse;
 	BookRequestDto bookRequestDto;
 
 	@Before
@@ -76,15 +74,23 @@ public class BookControllerTest {
 		bookBorrowResponseDto = new BookBorrowResponseDto();
 		bookBorrowResponseDto.setMessage("Books Borrowed Sucessfully");
 		bookBorrowResponseDto.setStatusCode(201);
+		bookBorrowResponseDto.setAuthorName("Jyoshna");
+		bookBorrowResponseDto.setBookName("Java");
+		bookResponse = new BookResponseDto();
+		bookResponse.setMessage("List of Books");
+		bookResponse.setStatusCode(201);
+		bookResponse.setAuthorName("Jyoshna");
+		bookResponse.setBookName("Java");
+		bookResponse.setStatus("Availed");
 	}
 
 	@Test
 	public void testGetBookList() {
-		logger.info("inside book list controller test");
 		List<Book> bookList = new ArrayList<>();
+		logger.info("inside book list controller test");
 		bookList.add(book);
 		Mockito.when(bookServiceImpl.getBookList()).thenReturn(bookList);
-		ResponseEntity<BookListResponseDto> bookListResponseDto = bookController.getBookList();
+		ResponseEntity<List<Book>> bookListResponseDto = bookController.getBookList();
 		assertNotNull(bookListResponseDto);
 		assertEquals(200, bookListResponseDto.getStatusCode().value());
 
@@ -101,7 +107,7 @@ public class BookControllerTest {
 	@Test
 	public void testBorrow() {
 		logger.info("inside borrow book controller test");
-		Mockito.when(bookServiceImpl.borrow(bookRequestDto)).thenReturn(book);
+		Mockito.when(bookServiceImpl.borrow(bookRequestDto)).thenReturn(bookBorrowResponseDto);
 		ResponseEntity<BookBorrowResponseDto> actualResult = bookController.borrow(bookRequestDto);
 		assertEquals(201, actualResult.getStatusCode().value());
 	}

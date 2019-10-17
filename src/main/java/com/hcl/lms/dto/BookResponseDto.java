@@ -10,4 +10,6 @@ public class BookResponseDto {
 	private String authorName;
 	private String message;
 	private Integer statusCode;
+	private String status;
+
 }

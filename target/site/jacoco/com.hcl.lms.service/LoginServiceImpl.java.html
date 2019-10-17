@@ -25,34 +25,31 @@ import com.hcl.lms.util.ExceptionConstants;
 	@Autowired
 	UserRepository customerRepository;
 
-	/*
-	 * This method is used to login the customer by providing valid credentials
+	/**
+	 * This method is used to login the customer by providing valid credentials.
 	 * 
-	 * @Param emailId,password
-	 * 
-	 * @return LoginResponseDto is the return object which includes
-	 * customerId,message,statusCode
-	 * 
+	 * @param parameters emailId, password
+	 * @return This method returns success message on login
 	 */
 
 	@Override
 	public LoginResponseDto login(LoginRequestDto loginRequestDto) {
 
-<span class="fc" id="L41">		logger.info(&quot;inside login service&quot;);</span>
-<span class="fc" id="L42">		User customer = customerRepository.findByEmailIdAndPasscode(loginRequestDto.getEmailId(),</span>
-<span class="fc" id="L43">				loginRequestDto.getPasscode());</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (customer == null) {</span>
-<span class="fc" id="L45">			throw new CommonException(ExceptionConstants.USER_NOT_FOUND);</span>
+<span class="fc" id="L38">		logger.info(&quot;inside login service&quot;);</span>
+<span class="fc" id="L39">		User customer = customerRepository.findByEmailIdAndPasscode(loginRequestDto.getEmailId(),</span>
+<span class="fc" id="L40">				loginRequestDto.getPasscode());</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (customer == null) {</span>
+<span class="fc" id="L42">			throw new CommonException(ExceptionConstants.USER_NOT_FOUND);</span>
 		}
 
-<span class="fc" id="L48">		customer.setEmailId(loginRequestDto.getEmailId());</span>
-<span class="fc" id="L49">		customer.setPasscode(loginRequestDto.getPasscode());</span>
+<span class="fc" id="L45">		customer.setEmailId(loginRequestDto.getEmailId());</span>
+<span class="fc" id="L46">		customer.setPasscode(loginRequestDto.getPasscode());</span>
 
-<span class="fc" id="L51">		LoginResponseDto loginResponseDto = new LoginResponseDto();</span>
-<span class="fc" id="L52">		loginResponseDto.setUserId(customer.getUserId());</span>
-<span class="fc" id="L53">		loginResponseDto.setStatusCode(201);</span>
-<span class="fc" id="L54">		loginResponseDto.setMessage(&quot;Login is successfull...&quot;);</span>
-<span class="fc" id="L55">		return loginResponseDto;</span>
+<span class="fc" id="L48">		LoginResponseDto loginResponseDto = new LoginResponseDto();</span>
+<span class="fc" id="L49">		loginResponseDto.setUserId(customer.getUserId());</span>
+<span class="fc" id="L50">		loginResponseDto.setStatusCode(201);</span>
+<span class="fc" id="L51">		loginResponseDto.setMessage(&quot;Login is successfull...&quot;);</span>
+<span class="fc" id="L52">		return loginResponseDto;</span>
 	}
 
 }
