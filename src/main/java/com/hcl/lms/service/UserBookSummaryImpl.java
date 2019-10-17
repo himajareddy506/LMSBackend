@@ -72,7 +72,6 @@ public class UserBookSummaryImpl implements UserBookSummary {
 		List<BorrowSummaryInfo> listBorrowSummaryInfo = new ArrayList<>();
 
 		List<BorrowDetail> borrowDetailList = borrowDetailRepository.findByUserId(userId);
-
 		borrowDetailList.stream().forEach(a -> {
 			BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();
 			borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());

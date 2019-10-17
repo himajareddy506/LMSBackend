@@ -72,18 +72,17 @@ import com.hcl.lms.util.ExceptionConstants;
 <span class="nc" id="L72">		List&lt;BorrowSummaryInfo&gt; listBorrowSummaryInfo = new ArrayList&lt;&gt;();</span>
 
 <span class="nc" id="L74">		List&lt;BorrowDetail&gt; borrowDetailList = borrowDetailRepository.findByUserId(userId);</span>
+<span class="nc" id="L75">		borrowDetailList.stream().forEach(a -&gt; {</span>
+<span class="nc" id="L76">			BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();</span>
+<span class="nc" id="L77">			borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());</span>
+<span class="nc" id="L78">			borrowSummaryInfo.setReleaseDate(a.getReleaseDate());</span>
+<span class="nc" id="L79">			Book bookList = bookRepository.findByBookId(a.getBookId());</span>
+<span class="nc" id="L80">			borrowSummaryInfo.setAuthor(bookList.getAuthor());</span>
+<span class="nc" id="L81">			borrowSummaryInfo.setBookName(bookList.getBookName());</span>
+<span class="nc" id="L82">			listBorrowSummaryInfo.add(borrowSummaryInfo);</span>
+<span class="nc" id="L83">		});</span>
 
-<span class="nc" id="L76">		borrowDetailList.stream().forEach(a -&gt; {</span>
-<span class="nc" id="L77">			BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();</span>
-<span class="nc" id="L78">			borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());</span>
-<span class="nc" id="L79">			borrowSummaryInfo.setReleaseDate(a.getReleaseDate());</span>
-<span class="nc" id="L80">			Book bookList = bookRepository.findByBookId(a.getBookId());</span>
-<span class="nc" id="L81">			borrowSummaryInfo.setAuthor(bookList.getAuthor());</span>
-<span class="nc" id="L82">			borrowSummaryInfo.setBookName(bookList.getBookName());</span>
-<span class="nc" id="L83">			listBorrowSummaryInfo.add(borrowSummaryInfo);</span>
-<span class="nc" id="L84">		});</span>
-
-<span class="nc" id="L86">		return listBorrowSummaryInfo;</span>
+<span class="nc" id="L85">		return listBorrowSummaryInfo;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

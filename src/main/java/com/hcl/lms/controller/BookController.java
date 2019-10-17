@@ -99,7 +99,7 @@ public class BookController {
 		Book bookInfo = bookService.requestBook(bookRequestDto);
 		bookResponse.setAuthorName(bookInfo.getAuthor());
 		bookResponse.setBookName(bookInfo.getBookName());
-		bookResponse.setMessage("Your request for availing the book is submitted successfully");
+		bookResponse.setMessage("Your request for availing the book is submitted successfully we will notify you upon the book aailability");
 		bookResponse.setStatusCode(200);
 		return new ResponseEntity<>(bookResponse, HttpStatus.CREATED);
 	}

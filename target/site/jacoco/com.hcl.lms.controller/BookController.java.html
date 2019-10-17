@@ -99,7 +99,7 @@ import com.hcl.lms.util.ExceptionConstants;
 <span class="fc" id="L99">		Book bookInfo = bookService.requestBook(bookRequestDto);</span>
 <span class="fc" id="L100">		bookResponse.setAuthorName(bookInfo.getAuthor());</span>
 <span class="fc" id="L101">		bookResponse.setBookName(bookInfo.getBookName());</span>
-<span class="fc" id="L102">		bookResponse.setMessage(&quot;Your request for availing the book is submitted successfully&quot;);</span>
+<span class="fc" id="L102">		bookResponse.setMessage(&quot;Your request for availing the book is submitted successfully we will notify you upon the book aailability&quot;);</span>
 <span class="fc" id="L103">		bookResponse.setStatusCode(200);</span>
 <span class="fc" id="L104">		return new ResponseEntity&lt;&gt;(bookResponse, HttpStatus.CREATED);</span>
 	}
