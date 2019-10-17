@@ -106,7 +106,7 @@ public class BookServiceTest {
 		assertNotNull(bookResponse);
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testSave() {
 		
 		ResponseDto response=bookServiceImpl.save(bookDto);
