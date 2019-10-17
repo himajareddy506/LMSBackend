@@ -56,31 +56,20 @@ import com.hcl.lms.util.ExceptionConstants;
 	public List&lt;BorrowSummaryInfo&gt; borrowSummaryInfo(Integer userId) {
 <span class="nc" id="L57">		logger.info(&quot;inside borrow summary service&quot;);</span>
 <span class="nc" id="L58">		List&lt;BorrowSummaryInfo&gt; listBorrowSummaryInfo = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L59">		List&lt;Book&gt; bookList = bookRepository.findByUserId(userId);</span>
+
 <span class="nc" id="L60">		List&lt;BorrowDetail&gt; borrowDetailList = borrowDetailRepository.findByUserId(userId);</span>
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (borrowDetailList != null) {</span>
-<span class="nc" id="L63">			borrowDetailList.stream().forEach(a -&gt; {</span>
+<span class="nc" id="L62">		borrowDetailList.stream().forEach(a -&gt; {</span>
+<span class="nc" id="L63">			BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();</span>
+<span class="nc" id="L64">			borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());</span>
+<span class="nc" id="L65">			borrowSummaryInfo.setReleaseDate(a.getReleaseDate());</span>
+<span class="nc" id="L66">			Book bookList = bookRepository.findByBookId(a.getBookId());</span>
+<span class="nc" id="L67">			borrowSummaryInfo.setAuthor(bookList.getAuthor());</span>
+<span class="nc" id="L68">			borrowSummaryInfo.setBookName(bookList.getBookName());</span>
+<span class="nc" id="L69">			listBorrowSummaryInfo.add(borrowSummaryInfo);</span>
+<span class="nc" id="L70">		});</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">				if (bookList != null) {</span>
-<span class="nc" id="L66">					System.out.println(bookList.toString());</span>
-<span class="nc" id="L67">					bookList.stream().forEach(b -&gt; {</span>
-
-<span class="nc" id="L69">						BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();</span>
-<span class="nc" id="L70">						borrowSummaryInfo.setAuthor(b.getAuthor());</span>
-<span class="nc" id="L71">						borrowSummaryInfo.setBookName(b.getBookName());</span>
-<span class="nc" id="L72">						borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());</span>
-<span class="nc" id="L73">						borrowSummaryInfo.setReleaseDate(a.getReleaseDate());</span>
-<span class="nc" id="L74">						listBorrowSummaryInfo.add(borrowSummaryInfo);</span>
-
-<span class="nc" id="L76">					});</span>
-
-				}
-
-<span class="nc" id="L80">			});</span>
-<span class="nc" id="L81">			return listBorrowSummaryInfo;</span>
-		}
-<span class="nc" id="L83">		throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);</span>
+<span class="nc" id="L72">		return listBorrowSummaryInfo;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

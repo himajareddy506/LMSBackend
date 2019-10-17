@@ -12,12 +12,8 @@ import com.hcl.lms.entity.Book;
 public interface BookService {
 
 	public List<Book> getBookList();
-
-	
-//	public  BookBorrowResponseDto borrow(BookRequestDto bookRequestDto);
 	public  BookBorrowResponseDto borrow(BookRequestDto bookRequestDto);
 	public  ResponseDto save (BookDto bookDto);
-
 	public Book requestBook(BookRequestDto bookRequestDto);
 
 }

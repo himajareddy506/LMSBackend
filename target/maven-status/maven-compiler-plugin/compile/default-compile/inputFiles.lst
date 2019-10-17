@@ -2,7 +2,6 @@ C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\controller\B
 C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\entity\User.java
 C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\repository\BookRequestDetailRepository.java
 C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\service\UserBookSummaryImpl.java
-C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\repository\LibraryRepository.java
 C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\dto\BorrowSummaryResponseDto.java
 C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\controller\UserBookSummaryController.java
 C:\Users\User1\Documents\third\LMSBackend\src\main\java\com\hcl\lms\controller\RegistrationController.java

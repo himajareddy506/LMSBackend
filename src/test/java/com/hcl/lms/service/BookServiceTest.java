@@ -19,7 +19,6 @@ import org.springframework.beans.BeanUtils;
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
 import com.hcl.lms.dto.BookRequestDto;
-import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
 import com.hcl.lms.entity.BorrowDetail;
@@ -100,7 +99,6 @@ public class BookServiceTest {
 		borrowList.add(borrowDetail);
 		bookList.add(book);
 		Mockito.when(bookRepository.findAll()).thenReturn(bookList);
-		Mockito.when(borrowDetailRepository.findByBookId(Mockito.anyInt())).thenReturn(borrowList);
 		List<Book> bookResponse = bookServiceImpl.getBookList();
 		assertNotNull(bookResponse);
 	}
@@ -110,7 +108,9 @@ public class BookServiceTest {
 		LOGGER.info("inside borrow book service test");
 		Optional<Book> bookInfo = Optional.of(book);
 		Mockito.when(borrowDetailRepository.save(Mockito.any())).thenReturn(borrowDetail);
+		Mockito.when(bookRepository.findByBookId(Mockito.anyInt())).thenReturn(book);
 		Mockito.when(bookRepository.findById(Mockito.anyInt())).thenReturn(bookInfo);
+		
 		BookBorrowResponseDto bookDetail = bookServiceImpl.borrow(bookRequestDto);
 		assertNotNull(bookDetail);
 		assertEquals("Java", bookDetail.getBookName());

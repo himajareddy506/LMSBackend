@@ -42,7 +42,7 @@ public class UserBookSummaryController {
 		addSummaryResponse.setAddedBookInfo(summaryInfo);
 		addSummaryResponse.setMessage("Lended Books");
 		addSummaryResponse.setStatusCode(200);
-		return new ResponseEntity<AddSummaryResponse>(addSummaryResponse, HttpStatus.OK);
+		return new ResponseEntity<>(addSummaryResponse, HttpStatus.OK);
 	}
 
 	@GetMapping("/book/{userId}/borrowSummary")
@@ -53,7 +53,7 @@ public class UserBookSummaryController {
 		borrowSummaryResponseDto.setBorrowSummaryInfo(borrowSummaryInfo);
 		borrowSummaryResponseDto.setMessage("Borrowed Books");
 		borrowSummaryResponseDto.setStatusCode(201);
-		return new ResponseEntity<BorrowSummaryResponseDto>(borrowSummaryResponseDto, HttpStatus.CREATED);
+		return new ResponseEntity<>(borrowSummaryResponseDto, HttpStatus.CREATED);
 	}
 
 }

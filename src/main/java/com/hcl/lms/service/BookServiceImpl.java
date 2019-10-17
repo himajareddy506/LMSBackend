@@ -1,7 +1,6 @@
 package com.hcl.lms.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -42,20 +41,18 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	BorrowDetailRepository borrowDetailRepository;
 
+	Random random = new Random();
+
 	@Override
 	public List<Book> getBookList() {
 		LOGGER.info("inside list of books service");
-				return bookRepository.findAll();
+		return bookRepository.findAll();
 	}
 
 	@Override
 	public ResponseDto save(BookDto bookDto) {
 		LOGGER.info("inside add book service");
-		Book listBook=bookRepository.findByBookNameAndAuthor(bookDto.getBookName(), bookDto.getAuthor());
-		/*if(((listBook.getBookName().equalsIgnoreCase(bookDto.getBookName()))&&(listBook.getAuthor().equalsIgnoreCase(bookDto.getAuthor())))) {
-			throw new CommonException(ExceptionConstants.BOOK_EXIST);
-		}*/
-		Random random = new Random();
+
 		Book book = new Book();
 		ResponseDto responseDto = new ResponseDto();
 		BeanUtils.copyProperties(bookDto, book);
@@ -71,14 +68,15 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookBorrowResponseDto borrow(BookRequestDto bookRequestDto) {
 		LOGGER.info("inside borrow book service");
-		BorrowDetail borrow=borrowDetailRepository.findByBookIdAndUserId(bookRequestDto.getBookId(), bookRequestDto.getUserId());
-		Book bookData=bookRepository.findByBookId(bookRequestDto.getBookId());
-		if(borrow!=null) {
+		BorrowDetail borrow = borrowDetailRepository.findByBookIdAndUserId(bookRequestDto.getBookId(),
+				bookRequestDto.getUserId());
+		Book bookData = bookRepository.findByBookId(bookRequestDto.getBookId());
+		if (borrow != null) {
 			throw new CommonException(ExceptionConstants.ALREADY_AVAILED);
 		}
-		BookBorrowResponseDto bookBorrowResponseDto=new BookBorrowResponseDto();
+		BookBorrowResponseDto bookBorrowResponseDto = new BookBorrowResponseDto();
 		BorrowDetail borrowDetail = new BorrowDetail();
-		Book bookInfo=null;
+		Book bookInfo = null;
 		BookBorrowResponseDto borrowResponseDto = new BookBorrowResponseDto();
 		BeanUtils.copyProperties(borrowResponseDto, borrowDetail);
 		borrowDetail.setBookId(bookRequestDto.getBookId());
@@ -89,26 +87,32 @@ public class BookServiceImpl implements BookService {
 		bookRepository.save(bookData);
 		borrowDetailRepository.save(borrowDetail);
 		Optional<Book> book = bookRepository.findById(bookRequestDto.getBookId());
-		if(!book.isPresent()) {
+		if (!book.isPresent()) {
 			throw new CommonException(ExceptionConstants.BOOK_NOT_AVAILABLE);
 		}
-		bookInfo=book.get();
+		bookInfo = book.get();
 		bookBorrowResponseDto.setAuthorName(bookInfo.getAuthor());
 		bookBorrowResponseDto.setBookName(bookInfo.getBookName());
 		bookBorrowResponseDto.setMessage("You have borrowed a book");
 		bookBorrowResponseDto.setStatusCode(201);
-		
+
 		return bookBorrowResponseDto;
 	}
 
 	@Override
 	public Book requestBook(BookRequestDto bookRequestDto) {
 		LOGGER.info("inside book request service");
+		
 		BookRequestDetail bookRequestrequestDetail = new BookRequestDetail();
 		BeanUtils.copyProperties(bookRequestDto, bookRequestrequestDetail);
 		bookRequestDetailRepository.save(bookRequestrequestDetail);
 		Optional<Book> book = bookRepository.findById(bookRequestDto.getBookId());
-		return book.get();
+		if (!book.isPresent()) {
+			throw new CommonException(ExceptionConstants.BOOK_NOT_AVAILABLE);
+		} 
+		Book bookInfo;	
+		bookInfo = book.get();
+		return bookInfo;
 	}
 
 }

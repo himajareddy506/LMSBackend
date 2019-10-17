@@ -36,20 +36,24 @@ import com.hcl.lms.util.ExceptionConstants;
 
 	public String registerUser(RegistrationRequestDto registrationRequestDto) {
 <span class="fc" id="L38">		logger.info(&quot;inside registration service&quot;);</span>
-<span class="fc" id="L39">		User user = new User();</span>
-<span class="fc" id="L40">		String regex = &quot;^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$&quot;;</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (!registrationRequestDto.getEmailId().matches(regex)) {</span>
-<span class="fc" id="L42">			throw new CommonException(ExceptionConstants.EMAIL_INVALID);</span>
+<span class="fc" id="L39">		User checkCustomerEmail = userRepository.findByEmailId(registrationRequestDto.getEmailId());</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">		if (checkCustomerEmail != null) {</span>
+<span class="nc" id="L41">			throw new CommonException(ExceptionConstants.EXIST_EMAIL);</span>
 		}
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (Long.toString(registrationRequestDto.getMobileNumber()).length() &lt; 10) {</span>
-<span class="fc" id="L45">			throw new CommonException(ExceptionConstants.MOBILE_INVALID);</span>
+<span class="fc" id="L43">		User user = new User();</span>
+<span class="fc" id="L44">		String regex = &quot;^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$&quot;;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (!registrationRequestDto.getEmailId().matches(regex)) {</span>
+<span class="fc" id="L46">			throw new CommonException(ExceptionConstants.EMAIL_INVALID);</span>
 		}
-<span class="fc" id="L47">		String randomPasscode = RandomStringUtils.randomAlphanumeric(5);</span>
-<span class="fc" id="L48">		BeanUtils.copyProperties(registrationRequestDto, user);</span>
-<span class="fc" id="L49">		user.setDateOfRegistration(LocalDate.now());</span>
-<span class="fc" id="L50">		user.setPasscode(randomPasscode);</span>
-<span class="fc" id="L51">		userRepository.save(user);</span>
-<span class="fc" id="L52">		return &quot;Successfully Registered&quot;;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (Long.toString(registrationRequestDto.getMobileNumber()).length() &lt; 10) {</span>
+<span class="fc" id="L49">			throw new CommonException(ExceptionConstants.MOBILE_INVALID);</span>
+		}
+<span class="fc" id="L51">		String randomPasscode = RandomStringUtils.randomAlphanumeric(5);</span>
+<span class="fc" id="L52">		BeanUtils.copyProperties(registrationRequestDto, user);</span>
+<span class="fc" id="L53">		user.setDateOfRegistration(LocalDate.now());</span>
+<span class="fc" id="L54">		user.setPasscode(randomPasscode);</span>
+<span class="fc" id="L55">		userRepository.save(user);</span>
+<span class="fc" id="L56">		return &quot;Successfully Registered&quot;;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
