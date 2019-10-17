@@ -11,4 +11,8 @@ import com.hcl.lms.entity.BorrowDetail;
 @Repository
 public interface BorrowDetailRepository extends JpaRepository<BorrowDetail, Integer> {
 	List<BorrowDetail> findByReleaseDate(LocalDate date);
+
+	List<BorrowDetail> findByUserId(Integer userId);
+
+	BorrowDetail findByBookIdAndUserId(Integer bookId, Integer userId);
 }

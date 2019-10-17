@@ -1,5 +1,7 @@
 package com.hcl.lms.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,16 @@ import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.service.RegistrationService;
 
 /**
- * @author Subashri Sridharan
+ * @author Subashri
+ *
  */
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 public class RegistrationController {
+
+	private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
 	@Autowired
 	RegistrationService registrationService;
@@ -33,6 +38,7 @@ public class RegistrationController {
 
 	@PostMapping("/register")
 	public ResponseEntity<ResponseDto> registerUser(@RequestBody RegistrationRequestDto registrationRequestDto) {
+		logger.info("inside user registration controller");
 		ResponseDto responseDto = new ResponseDto();
 		String message = registrationService.registerUser(registrationRequestDto);
 		responseDto.setMessage(message);

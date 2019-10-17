@@ -17,10 +17,12 @@ import com.hcl.lms.entity.User;
 import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.repository.UserRepository;
 import com.hcl.lms.service.LoginServiceImpl;
+
 /**
  * @author Jyoshna
  *
  */
+
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
 
@@ -28,8 +30,6 @@ public class LoginServiceTest {
 
 	@Mock
 	UserRepository userRepository;
-
-	
 
 	@InjectMocks
 	LoginServiceImpl loginServiceImpl;
@@ -58,13 +58,13 @@ public class LoginServiceTest {
 
 	@Test
 	public void testLogin() {
-		logger.info("inside login test");
+		logger.info("inside login service test");
 		Mockito.when(userRepository.findByEmailIdAndPasscode(Mockito.anyString(), Mockito.anyString()))
 				.thenReturn(user);
 		LoginResponseDto loginResponseDto = loginServiceImpl.login(loginRequestDto);
 		loginResponseDto.setMessage("Login Successfull");
 		Assert.assertEquals("Login Successfull", loginResponseDto.getMessage());
-		
+
 	}
 
 	@Test(expected = CommonException.class)
@@ -75,6 +75,6 @@ public class LoginServiceTest {
 		LoginResponseDto loginResponseDto = loginServiceImpl.login(loginRequestDto);
 		loginResponseDto.setMessage("Login Successfull");
 		Assert.assertEquals("Login Successfull", loginResponseDto.getMessage());
-		
+
 	}
 }
