@@ -73,7 +73,7 @@ public class BookServiceImpl implements BookService {
 
 		 Optional<User> user=userRepository.findById(bookDto.getUserId());
 		 if(!user.isPresent()) {
-			 throw new CommonException(ExceptionConstants.USER_NOT_FOUND);
+			 throw new CommonException(ExceptionConstants.USER_NOT_EXIST);
 		 }
 		
 		Book listBook=bookRepository.findByBookNameAndAuthor(bookDto.getBookName(), bookDto.getAuthor());
