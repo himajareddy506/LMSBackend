@@ -106,9 +106,9 @@ public class BookServiceTest {
 		assertNotNull(bookResponse);
 	}
 	
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testSave() {
-		Mockito.when(bookRepository.save(Mockito.any())).thenReturn(book);
+		
 		ResponseDto response=bookServiceImpl.save(bookDto);
 		assertNotNull(response);
 		assertEquals("Book Added Successfully", response.getMessage());

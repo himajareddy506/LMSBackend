@@ -18,7 +18,6 @@ import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
 import com.hcl.lms.entity.BorrowDetail;
-import com.hcl.lms.entity.User;
 import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.repository.BookRepository;
 import com.hcl.lms.repository.BookRequestDetailRepository;
@@ -69,18 +68,11 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public ResponseDto save(BookDto bookDto) {
-		LOGGER.info("inside add book service");
-
-		 Optional<User> user=userRepository.findById(bookDto.getUserId());
-		 if(!user.isPresent()) {
-			 throw new CommonException(ExceptionConstants.USER_NOT_EXIST);
-		 }
-		
+		LOGGER.info("inside add book service");		
 		Book listBook=bookRepository.findByBookNameAndAuthor(bookDto.getBookName(), bookDto.getAuthor());
 		if(((listBook.getBookName().equalsIgnoreCase(bookDto.getBookName()))&&(listBook.getAuthor().equalsIgnoreCase(bookDto.getAuthor())))) {
 			throw new CommonException(ExceptionConstants.BOOK_EXIST);
 		}
-		Random random = new Random();
 		Book book = new Book();
 		ResponseDto responseDto = new ResponseDto();
 		BeanUtils.copyProperties(bookDto, book);

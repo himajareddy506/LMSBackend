@@ -2,7 +2,6 @@ package com.hcl.lms.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import com.hcl.lms.dto.AddSummaryInfo;
 import com.hcl.lms.dto.BorrowSummaryInfo;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BorrowDetail;
-import com.hcl.lms.entity.User;
 import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.repository.BookRepository;
 import com.hcl.lms.repository.BorrowDetailRepository;
@@ -41,10 +39,6 @@ public class UserBookSummaryImpl implements UserBookSummary {
 
 	public List<AddSummaryInfo> addSummaryInfo(Integer userId) {
 		logger.info("inside add summary service");
-		Optional<User> user=userRepository.findById(userId);
-		 if(!user.isPresent()) {
-			 throw new CommonException(ExceptionConstants.USER_NOT_EXIST);
-		 }
 		List<AddSummaryInfo> listAddSummaryInfo = new ArrayList<>();
 		List<Book> bookList = bookRepository.findByUserId(userId);
 		if (bookList != null) {
@@ -65,10 +59,6 @@ public class UserBookSummaryImpl implements UserBookSummary {
 	@Override
 	public List<BorrowSummaryInfo> borrowSummaryInfo(Integer userId) {
 		logger.info("inside borrow summary service");
-		Optional<User> user=userRepository.findById(userId);
-		 if(!user.isPresent()) {
-			 throw new CommonException(ExceptionConstants.USER_NOT_EXIST);
-		 }
 		List<BorrowSummaryInfo> listBorrowSummaryInfo = new ArrayList<>();
 		List<BorrowDetail> borrowDetailList = borrowDetailRepository.findByUserId(userId);
 		borrowDetailList.stream().forEach(a -> {

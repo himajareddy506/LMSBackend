@@ -19,6 +19,7 @@ import com.hcl.lms.dto.BorrowSummaryInfo;
 import com.hcl.lms.dto.BorrowSummaryResponseDto;
 import com.hcl.lms.service.UserBookSummary;
 
+
 /**
  * @author Jyoshna, Subashri
  *
@@ -27,9 +28,9 @@ import com.hcl.lms.service.UserBookSummary;
 @RestController
 @RequestMapping(&quot;/api&quot;)
 @CrossOrigin(allowedHeaders = { &quot;*&quot;, &quot;*/&quot; }, origins = { &quot;*&quot;, &quot;*/&quot; })
-<span class="fc" id="L30">public class UserBookSummaryController {</span>
+<span class="fc" id="L31">public class UserBookSummaryController {</span>
 
-<span class="fc" id="L32">	private static final Logger logger = LoggerFactory.getLogger(UserBookSummaryController.class);</span>
+<span class="fc" id="L33">	private static final Logger logger = LoggerFactory.getLogger(UserBookSummaryController.class);</span>
 
 	@Autowired
 	UserBookSummary userBookSummary;
@@ -43,13 +44,13 @@ import com.hcl.lms.service.UserBookSummary;
 
 	@GetMapping(&quot;/book/{userId}/lendSummary&quot;)
 	public ResponseEntity&lt;AddSummaryResponse&gt; addSummary(@PathVariable(&quot;userId&quot;) Integer userId) {
-<span class="fc" id="L46">		logger.info(&quot;inside add book summary controller&quot;);</span>
-<span class="fc" id="L47">		AddSummaryResponse addSummaryResponse = new AddSummaryResponse();</span>
-<span class="fc" id="L48">		List&lt;AddSummaryInfo&gt; summaryInfo = userBookSummary.addSummaryInfo(userId);</span>
-<span class="fc" id="L49">		addSummaryResponse.setAddedBookInfo(summaryInfo);</span>
-<span class="fc" id="L50">		addSummaryResponse.setMessage(&quot;Lended Books&quot;);</span>
-<span class="fc" id="L51">		addSummaryResponse.setStatusCode(200);</span>
-<span class="fc" id="L52">		return new ResponseEntity&lt;&gt;(addSummaryResponse, HttpStatus.OK);</span>
+<span class="fc" id="L47">		logger.info(&quot;inside add book summary controller&quot;);</span>
+<span class="fc" id="L48">		AddSummaryResponse addSummaryResponse = new AddSummaryResponse();</span>
+<span class="fc" id="L49">		List&lt;AddSummaryInfo&gt; summaryInfo = userBookSummary.addSummaryInfo(userId);</span>
+<span class="fc" id="L50">		addSummaryResponse.setAddedBookInfo(summaryInfo);</span>
+<span class="fc" id="L51">		addSummaryResponse.setMessage(&quot;Lended Books&quot;);</span>
+<span class="fc" id="L52">		addSummaryResponse.setStatusCode(200);</span>
+<span class="fc" id="L53">		return new ResponseEntity&lt;&gt;(addSummaryResponse, HttpStatus.OK);</span>
 	}
 	
 	/**
@@ -61,13 +62,13 @@ import com.hcl.lms.service.UserBookSummary;
 
 	@GetMapping(&quot;/book/{userId}/borrowSummary&quot;)
 	public ResponseEntity&lt;BorrowSummaryResponseDto&gt; borrowSummary(@PathVariable(&quot;userId&quot;) Integer userId) {
-<span class="fc" id="L64">		logger.info(&quot;inside borrow book summary controller&quot;);</span>
-<span class="fc" id="L65">		BorrowSummaryResponseDto borrowSummaryResponseDto = new BorrowSummaryResponseDto();</span>
-<span class="fc" id="L66">		List&lt;BorrowSummaryInfo&gt; borrowSummaryInfo = userBookSummary.borrowSummaryInfo(userId);</span>
-<span class="fc" id="L67">		borrowSummaryResponseDto.setBorrowSummaryInfo(borrowSummaryInfo);</span>
-<span class="fc" id="L68">		borrowSummaryResponseDto.setMessage(&quot;Borrowed Books&quot;);</span>
-<span class="fc" id="L69">		borrowSummaryResponseDto.setStatusCode(201);</span>
-<span class="fc" id="L70">		return new ResponseEntity&lt;&gt;(borrowSummaryResponseDto, HttpStatus.CREATED);</span>
+<span class="fc" id="L65">		logger.info(&quot;inside borrow book summary controller&quot;);</span>
+<span class="fc" id="L66">		BorrowSummaryResponseDto borrowSummaryResponseDto = new BorrowSummaryResponseDto();</span>
+<span class="fc" id="L67">		List&lt;BorrowSummaryInfo&gt; borrowSummaryInfo = userBookSummary.borrowSummaryInfo(userId);</span>
+<span class="fc" id="L68">		borrowSummaryResponseDto.setBorrowSummaryInfo(borrowSummaryInfo);</span>
+<span class="fc" id="L69">		borrowSummaryResponseDto.setMessage(&quot;Borrowed Books&quot;);</span>
+<span class="fc" id="L70">		borrowSummaryResponseDto.setStatusCode(201);</span>
+<span class="fc" id="L71">		return new ResponseEntity&lt;&gt;(borrowSummaryResponseDto, HttpStatus.CREATED);</span>
 	}
 
 }

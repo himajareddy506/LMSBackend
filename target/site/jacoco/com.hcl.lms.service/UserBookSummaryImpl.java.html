@@ -15,6 +15,7 @@ import com.hcl.lms.entity.BorrowDetail;
 import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.repository.BookRepository;
 import com.hcl.lms.repository.BorrowDetailRepository;
+import com.hcl.lms.repository.UserRepository;
 import com.hcl.lms.util.ExceptionConstants;
 
 /**
@@ -23,66 +24,53 @@ import com.hcl.lms.util.ExceptionConstants;
  */
 
 @Service
-<span class="fc" id="L26">public class UserBookSummaryImpl implements UserBookSummary {</span>
+<span class="fc" id="L27">public class UserBookSummaryImpl implements UserBookSummary {</span>
 
-<span class="fc" id="L28">	private static final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);</span>
+<span class="fc" id="L29">	private static final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);</span>
 
 	@Autowired
 	BookRepository bookRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Autowired
 	BorrowDetailRepository borrowDetailRepository;
 
-	/**
-	 * This method is to get the user lend info.
-	 * 
-	 * @param parameter userId
-	 * @return This method returns user lend info
-	 */
-
 	public List&lt;AddSummaryInfo&gt; addSummaryInfo(Integer userId) {
-<span class="fc" id="L44">		logger.info(&quot;inside add summary service&quot;);</span>
-<span class="fc" id="L45">		List&lt;AddSummaryInfo&gt; listAddSummaryInfo = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L46">		List&lt;Book&gt; bookList = bookRepository.findByUserId(userId);</span>
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (bookList != null) {</span>
-<span class="fc" id="L48">			bookList.stream().forEach(a -&gt; {</span>
-<span class="fc" id="L49">				AddSummaryInfo addSummaryInfo = new AddSummaryInfo();</span>
-<span class="fc" id="L50">				addSummaryInfo.setAuthor(a.getAuthor());</span>
-<span class="fc" id="L51">				addSummaryInfo.setBookName(a.getBookName());</span>
-<span class="fc" id="L52">				addSummaryInfo.setLendDate(a.getLendDate());</span>
-<span class="fc" id="L53">				listAddSummaryInfo.add(addSummaryInfo);</span>
+<span class="fc" id="L41">		logger.info(&quot;inside add summary service&quot;);</span>
+<span class="fc" id="L42">		List&lt;AddSummaryInfo&gt; listAddSummaryInfo = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">		List&lt;Book&gt; bookList = bookRepository.findByUserId(userId);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (bookList != null) {</span>
+<span class="fc" id="L45">			bookList.stream().forEach(a -&gt; {</span>
+<span class="fc" id="L46">				AddSummaryInfo addSummaryInfo = new AddSummaryInfo();</span>
+<span class="fc" id="L47">				addSummaryInfo.setAuthor(a.getAuthor());</span>
+<span class="fc" id="L48">				addSummaryInfo.setBookName(a.getBookName());</span>
+<span class="fc" id="L49">				addSummaryInfo.setLendDate(a.getLendDate());</span>
+<span class="fc" id="L50">				listAddSummaryInfo.add(addSummaryInfo);</span>
 
-<span class="fc" id="L55">			});</span>
-<span class="fc" id="L56">			return listAddSummaryInfo;</span>
+<span class="fc" id="L52">			});</span>
+<span class="fc" id="L53">			return listAddSummaryInfo;</span>
 		} else {
-<span class="nc" id="L58">			throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);</span>
+<span class="nc" id="L55">			throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);</span>
 		}
 	}
 
-	/**
-	 * This method is to get the user borrow info.
-	 * 
-	 * @param parameter userId
-	 * @return This method returns user borrow info
-	 */
-
 	@Override
 	public List&lt;BorrowSummaryInfo&gt; borrowSummaryInfo(Integer userId) {
-<span class="nc" id="L71">		logger.info(&quot;inside borrow summary service&quot;);</span>
-<span class="nc" id="L72">		List&lt;BorrowSummaryInfo&gt; listBorrowSummaryInfo = new ArrayList&lt;&gt;();</span>
-
-<span class="nc" id="L74">		List&lt;BorrowDetail&gt; borrowDetailList = borrowDetailRepository.findByUserId(userId);</span>
-<span class="nc" id="L75">		borrowDetailList.stream().forEach(a -&gt; {</span>
-<span class="nc" id="L76">			BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();</span>
-<span class="nc" id="L77">			borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());</span>
-<span class="nc" id="L78">			borrowSummaryInfo.setReleaseDate(a.getReleaseDate());</span>
-<span class="nc" id="L79">			Book bookList = bookRepository.findByBookId(a.getBookId());</span>
-<span class="nc" id="L80">			borrowSummaryInfo.setAuthor(bookList.getAuthor());</span>
-<span class="nc" id="L81">			borrowSummaryInfo.setBookName(bookList.getBookName());</span>
-<span class="nc" id="L82">			listBorrowSummaryInfo.add(borrowSummaryInfo);</span>
-<span class="nc" id="L83">		});</span>
-
-<span class="nc" id="L85">		return listBorrowSummaryInfo;</span>
+<span class="nc" id="L61">		logger.info(&quot;inside borrow summary service&quot;);</span>
+<span class="nc" id="L62">		List&lt;BorrowSummaryInfo&gt; listBorrowSummaryInfo = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L63">		List&lt;BorrowDetail&gt; borrowDetailList = borrowDetailRepository.findByUserId(userId);</span>
+<span class="nc" id="L64">		borrowDetailList.stream().forEach(a -&gt; {</span>
+<span class="nc" id="L65">			BorrowSummaryInfo borrowSummaryInfo = new BorrowSummaryInfo();</span>
+<span class="nc" id="L66">			borrowSummaryInfo.setBorrowDate(a.getDateOfBorrow());</span>
+<span class="nc" id="L67">			borrowSummaryInfo.setReleaseDate(a.getReleaseDate());</span>
+<span class="nc" id="L68">			Book bookList = bookRepository.findByBookId(a.getBookId());</span>
+<span class="nc" id="L69">			borrowSummaryInfo.setAuthor(bookList.getAuthor());</span>
+<span class="nc" id="L70">			borrowSummaryInfo.setBookName(bookList.getBookName());</span>
+<span class="nc" id="L71">			listBorrowSummaryInfo.add(borrowSummaryInfo);</span>
+<span class="nc" id="L72">		});</span>
+<span class="nc" id="L73">		return listBorrowSummaryInfo;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -12,15 +12,13 @@ import com.hcl.lms.entity.BorrowDetail;
 import com.hcl.lms.repository.BookRepository;
 import com.hcl.lms.repository.BorrowDetailRepository;
 
-
-
 /**
  * @author Subashri Sridharan
  *
  */
 
 @Component
-<span class="nc" id="L23">public class Scheduler {</span>
+<span class="nc" id="L21">public class Scheduler {</span>
 	@Autowired
 	BorrowDetailRepository borrowDetailRepository;
 	@Autowired
@@ -33,12 +31,13 @@ import com.hcl.lms.repository.BorrowDetailRepository;
 
 	@Scheduled(cron = &quot;0 0/1 * * * *&quot;)
 	public void bookReleaseSchedule() {
-<span class="nc" id="L36">		List&lt;BorrowDetail&gt; borrowList = borrowDetailRepository.findByReleaseDate(LocalDate.now());</span>
-<span class="nc" id="L37">		borrowList.stream().forEach(borrowInfo -&gt; {</span>
-<span class="nc" id="L38">			Book book=bookRepository.findByBookId(borrowInfo.getBookId());</span>
-<span class="nc" id="L39">			book.setStatus(&quot;Available&quot;);</span>
-<span class="nc" id="L40">			borrowDetailRepository.save(borrowInfo);</span>
-<span class="nc" id="L41">		});</span>
-<span class="nc" id="L42">	}</span>
+<span class="nc" id="L34">		List&lt;BorrowDetail&gt; borrowList = borrowDetailRepository.findByReleaseDate(LocalDate.now());</span>
+<span class="nc" id="L35">		borrowList.stream().forEach(borrowInfo -&gt; {</span>
+<span class="nc" id="L36">			Book book = bookRepository.findByBookId(borrowInfo.getBookId());</span>
+<span class="nc" id="L37">			book.setStatus(&quot;Available&quot;);</span>
+<span class="nc" id="L38">			bookRepository.save(book);</span>
+
+<span class="nc" id="L40">		});</span>
+<span class="nc" id="L41">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

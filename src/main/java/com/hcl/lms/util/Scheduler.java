@@ -12,8 +12,6 @@ import com.hcl.lms.entity.BorrowDetail;
 import com.hcl.lms.repository.BookRepository;
 import com.hcl.lms.repository.BorrowDetailRepository;
 
-
-
 /**
  * @author Subashri Sridharan
  *
@@ -35,9 +33,10 @@ public class Scheduler {
 	public void bookReleaseSchedule() {
 		List<BorrowDetail> borrowList = borrowDetailRepository.findByReleaseDate(LocalDate.now());
 		borrowList.stream().forEach(borrowInfo -> {
-			Book book=bookRepository.findByBookId(borrowInfo.getBookId());
+			Book book = bookRepository.findByBookId(borrowInfo.getBookId());
 			book.setStatus("Available");
-			borrowDetailRepository.save(borrowInfo);
+			bookRepository.save(book);
+
 		});
 	}
 }
