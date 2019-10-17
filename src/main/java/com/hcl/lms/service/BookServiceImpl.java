@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
 import com.hcl.lms.dto.BookRequestDto;
-import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BookRequestDetail;
@@ -44,42 +43,9 @@ public class BookServiceImpl implements BookService {
 	BorrowDetailRepository borrowDetailRepository;
 
 	@Override
-	public List<BookResponseDto> getBookList() {
+	public List<Book> getBookList() {
 		LOGGER.info("inside list of books service");
-		List<BookResponseDto> bookResponseList=new ArrayList<>();
-		List<BorrowDetail> borrowInfo=new ArrayList<>();
-		List<Book> bookInfo=bookRepository.findAll();
-		for(Book book:bookInfo) {
-			borrowInfo=borrowDetailRepository.findByBookId(book.getBookId());
-			
-			if(borrowInfo==null) {
-				BookResponseDto bookResponse=new BookResponseDto();
-
-				bookResponse.setAuthorName(book.getAuthor());
-				bookResponse.setBookName(book.getBookName());
-				bookResponse.setStatus("Available");
-				bookResponse.setStatusCode(200);
-				bookResponse.setMessage("List of books");
-				bookResponseList.add(bookResponse);
-			}
-			else {
-				for(BorrowDetail borrowData:borrowInfo) {
-					BookResponseDto bookResponse=new BookResponseDto();
-
-					bookResponse.setAuthorName(book.getAuthor());
-					bookResponse.setBookName(book.getBookName());
-					bookResponse.setStatus(borrowData.getStatus());
-					bookResponse.setStatusCode(200);
-					bookResponse.setMessage("List of books");
-					bookResponseList.add(bookResponse);
-				}
-			}
-			
-			
-			}
-		
-		
-		return bookResponseList;
+				return bookRepository.findAll();
 	}
 
 	@Override
@@ -95,6 +61,7 @@ public class BookServiceImpl implements BookService {
 		BeanUtils.copyProperties(bookDto, book);
 		book.setLendDate(LocalDate.now());
 		book.setBookCode(random.nextInt(1000));
+		book.setStatus("Available");
 		bookRepository.save(book);
 		responseDto.setMessage("Book Added Successfully");
 		responseDto.setStatusCode(200);
@@ -105,6 +72,7 @@ public class BookServiceImpl implements BookService {
 	public BookBorrowResponseDto borrow(BookRequestDto bookRequestDto) {
 		LOGGER.info("inside borrow book service");
 		BorrowDetail borrow=borrowDetailRepository.findByBookIdAndUserId(bookRequestDto.getBookId(), bookRequestDto.getUserId());
+		Book bookData=bookRepository.findByBookId(bookRequestDto.getBookId());
 		if(borrow!=null) {
 			throw new CommonException(ExceptionConstants.ALREADY_AVAILED);
 		}
@@ -116,8 +84,9 @@ public class BookServiceImpl implements BookService {
 		borrowDetail.setBookId(bookRequestDto.getBookId());
 		borrowDetail.setUserId(bookRequestDto.getUserId());
 		borrowDetail.setDateOfBorrow(LocalDate.now());
+		bookData.setStatus("Availed");
 		borrowDetail.setReleaseDate(LocalDate.now().plusDays(3));
-		borrowDetail.setStatus("availed");
+		bookRepository.save(bookData);
 		borrowDetailRepository.save(borrowDetail);
 		Optional<Book> book = bookRepository.findById(bookRequestDto.getBookId());
 		if(!book.isPresent()) {
@@ -128,7 +97,6 @@ public class BookServiceImpl implements BookService {
 		bookBorrowResponseDto.setBookName(bookInfo.getBookName());
 		bookBorrowResponseDto.setMessage("You have borrowed a book");
 		bookBorrowResponseDto.setStatusCode(201);
-		bookBorrowResponseDto.setStatus("Availed");
 		
 		return bookBorrowResponseDto;
 	}

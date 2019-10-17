@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.hcl.lms.entity.Book;
 import com.hcl.lms.entity.BorrowDetail;
+import com.hcl.lms.repository.BookRepository;
 import com.hcl.lms.repository.BorrowDetailRepository;
 
 /**
@@ -19,6 +21,8 @@ import com.hcl.lms.repository.BorrowDetailRepository;
 public class Scheduler {
 	@Autowired
 	BorrowDetailRepository borrowDetailRepository;
+	@Autowired
+	BookRepository bookRepository;
 
 	/**
 	 * Book will be released automatically on the releaseDate
@@ -29,7 +33,8 @@ public class Scheduler {
 	public void bookReleaseSchedule() {
 		List<BorrowDetail> borrowList = borrowDetailRepository.findByReleaseDate(LocalDate.now());
 		borrowList.stream().forEach(borrowInfo -> {
-			borrowInfo.setStatus(ExceptionConstants.releaseStatus);
+			Book book=bookRepository.findByBookId(borrowInfo.getBookId());
+			book.setStatus(ExceptionConstants.releaseStatus);
 			borrowDetailRepository.save(borrowInfo);
 		});
 	}

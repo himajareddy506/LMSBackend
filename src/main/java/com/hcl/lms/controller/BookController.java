@@ -38,9 +38,9 @@ public class BookController {
 	BookService bookService;
 
 	@GetMapping("/books")
-	public ResponseEntity<List<BookResponseDto>> getBookList() {
+	public ResponseEntity<List<Book>> getBookList() {
 		logger.info("inside book list controller");
-		List<BookResponseDto> bookList= bookService.getBookList();
+		List<Book> bookList= bookService.getBookList();
 		return new ResponseEntity<>(bookList, HttpStatus.OK);
 	}
 

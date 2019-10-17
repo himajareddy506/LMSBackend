@@ -25,7 +25,7 @@ private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookId;
 	private Integer bookCode;
-
+	private String status;
 	private String bookName;
 	private String author;
 	private LocalDate lendDate;
