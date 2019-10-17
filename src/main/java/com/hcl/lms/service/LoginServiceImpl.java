@@ -25,14 +25,11 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	UserRepository customerRepository;
 
-	/*
-	 * This method is used to login the customer by providing valid credentials
+	/**
+	 * This method is used to login the customer by providing valid credentials.
 	 * 
-	 * @Param emailId,password
-	 * 
-	 * @return LoginResponseDto is the return object which includes
-	 * customerId,message,statusCode
-	 * 
+	 * @param parameters emailId, password
+	 * @return This method returns success message on login
 	 */
 
 	@Override

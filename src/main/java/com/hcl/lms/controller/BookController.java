@@ -20,7 +20,9 @@ import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.dto.ResponseDto;
 import com.hcl.lms.entity.Book;
+import com.hcl.lms.exception.CommonException;
 import com.hcl.lms.service.BookService;
+import com.hcl.lms.util.ExceptionConstants;
 
 /**
  * @author Jyoshna, Subashri, Shilendra
@@ -37,12 +39,29 @@ public class BookController {
 	@Autowired
 	BookService bookService;
 
+	/**
+	 * This method is used to get the list of books.
+	 * 
+	 * @param no parameters taken
+	 * @return This method will return list of books
+	 */
+
 	@GetMapping("/books")
 	public ResponseEntity<List<Book>> getBookList() {
 		logger.info("inside book list controller");
-		List<Book> bookList= bookService.getBookList();
+		List<Book> bookList = bookService.getBookList();
+		if (bookList == null) {
+			throw new CommonException(ExceptionConstants.BOOK_NOT_AVAILABLE);
+		}
 		return new ResponseEntity<>(bookList, HttpStatus.OK);
 	}
+
+	/**
+	 * This method is used to add the book.
+	 * 
+	 * @param parameters userId, bookName, author
+	 * @return This method returns success message on adding the book
+	 */
 
 	@PostMapping("/book/add")
 	public ResponseEntity<ResponseDto> save(@RequestBody BookDto bookDto) {
@@ -50,7 +69,14 @@ public class BookController {
 		return new ResponseEntity<>(bookService.save(bookDto), HttpStatus.CREATED);
 
 	}
-	
+
+	/**
+	 * This method is used to borrow the book.
+	 * 
+	 * @param parameters userId, bookId
+	 * @return This method returns success message on borrowing the book
+	 */
+
 	@PostMapping("/book/borrow")
 	public ResponseEntity<BookBorrowResponseDto> borrow(@RequestBody BookRequestDto bookRequestDto) {
 		logger.info("inside borrow book controller");
@@ -60,9 +86,10 @@ public class BookController {
 	}
 
 	/**
-	 * @param bookId,userId
-	 * @return authorName,bookName,message,statusCode
-	 *
+	 * This method is used to send request for the book.
+	 * 
+	 * @param parameters userId, bookId
+	 * @return This method returns success message on requesting to avail the book
 	 */
 
 	@PostMapping("/book/request")

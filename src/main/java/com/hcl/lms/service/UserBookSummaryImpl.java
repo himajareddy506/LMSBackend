@@ -33,6 +33,13 @@ public class UserBookSummaryImpl implements UserBookSummary {
 	@Autowired
 	BorrowDetailRepository borrowDetailRepository;
 
+	/**
+	 * This method is to get the user lend info.
+	 * 
+	 * @param parameter userId
+	 * @return This method returns user lend info
+	 */
+
 	public List<AddSummaryInfo> addSummaryInfo(Integer userId) {
 		logger.info("inside add summary service");
 		List<AddSummaryInfo> listAddSummaryInfo = new ArrayList<>();
@@ -51,6 +58,13 @@ public class UserBookSummaryImpl implements UserBookSummary {
 			throw new CommonException(ExceptionConstants.NO_ADDED_BOOKS_FOUND);
 		}
 	}
+
+	/**
+	 * This method is to get the user borrow info.
+	 * 
+	 * @param parameter userId
+	 * @return This method returns user borrow info
+	 */
 
 	@Override
 	public List<BorrowSummaryInfo> borrowSummaryInfo(Integer userId) {

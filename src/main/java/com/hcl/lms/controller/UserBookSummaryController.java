@@ -33,6 +33,13 @@ public class UserBookSummaryController {
 
 	@Autowired
 	UserBookSummary userBookSummary;
+	
+	/**
+	 * This method is to get the user lend info.
+	 * 
+	 * @param parameter userId
+	 * @return This method returns user lend info
+	 */
 
 	@GetMapping("/book/{userId}/lendSummary")
 	public ResponseEntity<AddSummaryResponse> addSummary(@PathVariable("userId") Integer userId) {
@@ -44,6 +51,13 @@ public class UserBookSummaryController {
 		addSummaryResponse.setStatusCode(200);
 		return new ResponseEntity<>(addSummaryResponse, HttpStatus.OK);
 	}
+	
+	/**
+	 * This method is to get the user borrow info.
+	 * 
+	 * @param parameter userId
+	 * @return This method returns user borrow info
+	 */
 
 	@GetMapping("/book/{userId}/borrowSummary")
 	public ResponseEntity<BorrowSummaryResponseDto> borrowSummary(@PathVariable("userId") Integer userId) {

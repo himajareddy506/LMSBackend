@@ -16,10 +16,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-
 import com.hcl.lms.dto.BookBorrowResponseDto;
 import com.hcl.lms.dto.BookDto;
-import com.hcl.lms.dto.BookListResponseDto;
 import com.hcl.lms.dto.BookRequestDto;
 import com.hcl.lms.dto.BookResponseDto;
 import com.hcl.lms.dto.ResponseDto;
@@ -85,11 +83,10 @@ public class BookControllerTest {
 		bookResponse.setBookName("Java");
 		bookResponse.setStatus("Availed");
 	}
-	
 
 	@Test
 	public void testGetBookList() {
-		List<Book> bookList=new ArrayList<>();
+		List<Book> bookList = new ArrayList<>();
 		logger.info("inside book list controller test");
 		bookList.add(book);
 		Mockito.when(bookServiceImpl.getBookList()).thenReturn(bookList);

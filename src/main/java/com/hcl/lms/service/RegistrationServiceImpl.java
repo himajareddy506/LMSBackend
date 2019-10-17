@@ -29,9 +29,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 	UserRepository userRepository;
 
 	/**
-	 * @param User FirstName,LastName,EmailID,Password
-	 * @return Success Message
-	 *
+	 * This method is used to register user by providing user info.
+	 * 
+	 * @param parameters firstName,lastName,emailId,password
+	 * @return This method returns success message on registration
 	 */
 
 	public String registerUser(RegistrationRequestDto registrationRequestDto) {

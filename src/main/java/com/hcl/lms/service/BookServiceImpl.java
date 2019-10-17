@@ -43,16 +43,30 @@ public class BookServiceImpl implements BookService {
 
 	Random random = new Random();
 
+	/**
+	 * This method is used to get the list of books.
+	 * 
+	 * @param no parameters taken
+	 * @return This method will return list of books
+	 */
+
 	@Override
 	public List<Book> getBookList() {
 		LOGGER.info("inside list of books service");
 		return bookRepository.findAll();
 	}
 
+	/**
+	 * This method is used to add the book.
+	 * 
+	 * @param parameters userId, bookName, author
+	 * @return This method returns success message on adding the book
+	 */
+
 	@Override
 	public ResponseDto save(BookDto bookDto) {
 		LOGGER.info("inside add book service");
-
+		System.out.println(bookDto.getUserId());
 		Book book = new Book();
 		ResponseDto responseDto = new ResponseDto();
 		BeanUtils.copyProperties(bookDto, book);
@@ -64,6 +78,13 @@ public class BookServiceImpl implements BookService {
 		responseDto.setStatusCode(200);
 		return responseDto;
 	}
+
+	/**
+	 * This method is used to borrow the book.
+	 * 
+	 * @param parameters userId, bookId
+	 * @return This method returns success message on borrowing the book
+	 */
 
 	@Override
 	public BookBorrowResponseDto borrow(BookRequestDto bookRequestDto) {
@@ -95,22 +116,29 @@ public class BookServiceImpl implements BookService {
 		bookBorrowResponseDto.setBookName(bookInfo.getBookName());
 		bookBorrowResponseDto.setMessage("You have borrowed a book");
 		bookBorrowResponseDto.setStatusCode(201);
-
+		bookBorrowResponseDto.setStatus(bookInfo.getStatus());
 		return bookBorrowResponseDto;
 	}
+
+	/**
+	 * This method is used to send request for the book.
+	 * 
+	 * @param parameters userId, bookId
+	 * @return This method returns success message on requesting to avail the book
+	 */
 
 	@Override
 	public Book requestBook(BookRequestDto bookRequestDto) {
 		LOGGER.info("inside book request service");
-		
+
 		BookRequestDetail bookRequestrequestDetail = new BookRequestDetail();
 		BeanUtils.copyProperties(bookRequestDto, bookRequestrequestDetail);
 		bookRequestDetailRepository.save(bookRequestrequestDetail);
 		Optional<Book> book = bookRepository.findById(bookRequestDto.getBookId());
 		if (!book.isPresent()) {
 			throw new CommonException(ExceptionConstants.BOOK_NOT_AVAILABLE);
-		} 
-		Book bookInfo;	
+		}
+		Book bookInfo;
 		bookInfo = book.get();
 		return bookInfo;
 	}

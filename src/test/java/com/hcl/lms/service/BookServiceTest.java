@@ -84,10 +84,9 @@ public class BookServiceTest {
 		borrowDetail = new BorrowDetail();
 		borrowDetail.setBookId(1);
 		borrowDetail.setBorrowerId(1);
-		
+
 		borrowDetail.setDateOfBorrow(LocalDate.now());
 		borrowDetail.setReleaseDate(LocalDate.now().plusDays(3));
-		
 
 	}
 
@@ -95,7 +94,7 @@ public class BookServiceTest {
 	public void testGetBookList() {
 		LOGGER.info("inside list of books service test");
 		List<Book> bookList = new ArrayList<>();
-		List<BorrowDetail> borrowList=new ArrayList<>();
+		List<BorrowDetail> borrowList = new ArrayList<>();
 		borrowList.add(borrowDetail);
 		bookList.add(book);
 		Mockito.when(bookRepository.findAll()).thenReturn(bookList);
@@ -110,7 +109,7 @@ public class BookServiceTest {
 		Mockito.when(borrowDetailRepository.save(Mockito.any())).thenReturn(borrowDetail);
 		Mockito.when(bookRepository.findByBookId(Mockito.anyInt())).thenReturn(book);
 		Mockito.when(bookRepository.findById(Mockito.anyInt())).thenReturn(bookInfo);
-		
+
 		BookBorrowResponseDto bookDetail = bookServiceImpl.borrow(bookRequestDto);
 		assertNotNull(bookDetail);
 		assertEquals("Java", bookDetail.getBookName());

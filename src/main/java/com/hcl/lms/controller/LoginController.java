@@ -30,14 +30,11 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 
-	/*
-	 * This method is used to login the customer by providing valid credentials
+	/**
+	 * This method is used to login the customer by providing valid credentials.
 	 * 
-	 * @Param LoginRequestDto which includes emailId,password
-	 * 
-	 * @return LoginResponseDto is the return object which includes
-	 * customerId,message,statusCode
-	 * 
+	 * @param parameters emailId, password
+	 * @return This method returns success message on login
 	 */
 
 	@PostMapping("/login")

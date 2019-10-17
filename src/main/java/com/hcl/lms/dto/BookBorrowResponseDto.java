@@ -10,5 +10,5 @@ public class BookBorrowResponseDto {
 	private String authorName;
 	private Integer statusCode;
 	private String message;
-
-}
+	private String status;
+ }
