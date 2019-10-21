@@ -1,4 +1,4 @@
-node('master'){
+node('dev'){
    stage('git checkout'){
                   git 'https://github.com/himajareddy506/LMSBackend.git'
               }
