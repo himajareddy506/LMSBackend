@@ -12,7 +12,7 @@ sh '/opt/maven/bin/mvn clean deploy sonar:sonar -Dsonar.password=admin -Dsonar.l
 
 {
 
-sh 'export JENKINS_NODE_COOKIE=dontKillMe ;nohup java -jar $WORKSPACE/target/*.jar &'
+sh 'export JENKINS_NODE_COOKIE=dontKillMe ;nohup java-Dspring.profiles.active=dev -jar $WORKSPACE/target/*.jar &'
 
 }
 }
