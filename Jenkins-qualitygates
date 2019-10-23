@@ -6,18 +6,15 @@ pipeline {
           }  
           stage("build & SonarQube analysis") {
             steps {
-              withSonarQubeEnv('Sonar') {
+              withSonarQubeEnv('sonar') {
                 sh 'mvn clean verify sonar:sonar'
               }
             }
           }
           stage("Quality Gate") {
             steps {
-              timeout(time: 1, unit: 'SECONDS') {
-                def qg = waitforQualityGate()
-                if (qg.status != 'OK'){
-                        error "Pipeline quality gates failed: ${qg.status}"
-                }
+              timeout(time: 30, unit: 'SECONDS') {
+                waitForQualityGate abortPipeline: true
               }
             }
           }
