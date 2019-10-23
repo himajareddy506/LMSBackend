@@ -1,0 +1,22 @@
+pipeline {
+        agent any
+        stages {
+          stage("SCM checkout"){
+            git branch: 'dev',url: 'https://github.com/himajareddy506/LMSBackend.git'
+          }  
+          stage("build & SonarQube analysis") {
+            steps {
+              withSonarQubeEnv('Sonar') {
+                sh 'mvn clean varify sonar:sonar'
+              }
+            }
+          }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+        }
+      }
