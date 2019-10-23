@@ -1,10 +1,10 @@
-node('master'){
+node('dev'){
 
 stage('Git checkout')
 
 {
 
-git 'https://github.com/Rajivshetty/Inglibrary-backend.git'
+git branch:'dev',url:git 'https://github.com/himajareddy506/LMSBackend.git'
 
 }
 
