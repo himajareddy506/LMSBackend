@@ -1,18 +1,61 @@
-node('dev')
+node('master'){
+
+stage('Git checkout')
+
 {
-stage('git checkout')
-{
-git branch:'dev',url:'https://github.com/himajareddy506/LMSBackend.git'
+
+git 'https://github.com/Rajivshetty/Inglibrary-backend.git'
+
 }
-stage('java build')
+
+stage('Build')
+
 {
-sh '/opt/maven/bin/mvn clean deploy sonar:sonar -Dsonar.password=admin -Dsonar.login=admin'
+
+withSonarQubeEnv('sonar')
+
+{
+
+sh '/opt/maven/bin/mvn clean verify sonar:sonar -Dsonar.password=admin -Dsonar.login=admin'
+
 }
-  stage('Running java backend application')
+
+}
+
+stage('Quality Gate')
 
 {
 
-sh 'export JENKINS_NODE_COOKIE=dontKillMe ;nohup java-Dspring.profiles.active=dev -jar $WORKSPACE/target/*.jar &'
+timeout(time: 1, unit: 'HOURS')
 
+{
+
+def qg = waitForQualityGate()
+
+if (qg.status != 'OK')
+
+{
+
+error "Pipeline aborted due to quality gate failure: ${qg.status}"
+
+}
+
+}
+
+}
+
+stage('Deploy')
+
+{
+
+sh '/opt/maven/bin/mvn clean deploy '
+
+}
+
+stage('Run the application')
+
+{
+
+sh 'export JENKINS_NODE_COOKIE=dontKillMe ;nohup java -Dspring.profiles.active=dev -jar $WORKSPACE/target/*.jar &'
 }
 }
